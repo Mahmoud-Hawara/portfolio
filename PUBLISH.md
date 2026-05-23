@@ -49,7 +49,7 @@ git push -u origin main
 ## Remote already set
 
 ```text
-origin  https://github.com/mahmoudhawara/portfolio.git
+origin  git@github.com:Mahmoud-Hawara/portfolio.git
 ```
 
 ## Common mistakes
@@ -63,6 +63,6 @@ origin  https://github.com/mahmoudhawara/portfolio.git
 
 ## After publish
 
-Your repo will be: **https://github.com/mahmoudhawara/portfolio**
+Your repo will be: **https://github.com/Mahmoud-Hawara/portfolio**
 
 Deploy free hosting with Vercel: connect that repo at https://vercel.com/new

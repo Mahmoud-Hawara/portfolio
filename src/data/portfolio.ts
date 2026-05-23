@@ -15,7 +15,7 @@ export const personal = {
   cv: "/cv.pdf",
   links: {
     linkedin: "https://www.linkedin.com/in/mahmoudhawara",
-    github: "https://github.com/mahmoudhawara",
+    github: "https://github.com/Mahmoud-Hawara",
     icpc: "https://icpc.global/team/registration/team/team.html?teamid=123456",
     codeforces: "https://codeforces.com/profile/mahmoudhawara",
   },
