@@ -15,7 +15,7 @@ export function ProfilePanel({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "card-hover rounded-lg border border-border bg-card/70 p-4 backdrop-blur-sm sm:p-5 md:p-6 lg:p-7 dark:bg-card/55",
+        "card-hover rounded-lg border border-border bg-card/70 p-3 backdrop-blur-sm sm:p-5 md:p-6 lg:p-7 dark:bg-card/55",
         className
       )}
     >
@@ -31,7 +31,7 @@ export function ProfilePanel({ className }: { className?: string }) {
             viewport={{ once: true }}
             transition={{ delay: i * 0.07, duration: 0.4 }}
             className={cn(
-              "group rounded-sm py-5 transition-colors hover:bg-muted/30",
+              "group rounded-sm py-3.5 transition-colors hover:bg-muted/30 sm:py-5",
               i > 0 && "border-t border-border/60"
             )}
           >

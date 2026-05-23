@@ -22,6 +22,7 @@ import {
   contactOpenTo,
   personal,
 } from "@/data/portfolio";
+import { containerShell, sectionShell } from "@/lib/layout-classes";
 
 const socialLinks = [
   { label: "GitHub", href: personal.links.github, brand: "github" as const },
@@ -43,8 +44,8 @@ const metaRows = [
 
 export function Contact() {
   return (
-    <section id="contact" className="border-t border-border py-20 md:py-28">
-      <div className="mx-auto max-w-6xl px-4 md:px-6">
+    <section id="contact" className={sectionShell}>
+      <div className={containerShell}>
         <AnimatedSectionHeading
           index="07 — Contact"
           title="Let's connect"
@@ -53,7 +54,7 @@ export function Contact() {
 
         <FadeIn delay={0.08} direction="up">
           <div className="overflow-hidden rounded-xl border border-border bg-card shadow-sm">
-            <div className="flex flex-col gap-4 border-b border-border bg-gradient-to-r from-primary/5 via-transparent to-[var(--gh-link)]/5 px-6 py-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between md:px-8">
+            <div className="flex flex-col gap-4 border-b border-border bg-gradient-to-r from-primary/5 via-transparent to-[var(--gh-link)]/5 px-4 py-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:px-6 md:px-8">
               <div className="flex flex-wrap items-center gap-3">
                 <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
                   <span className="relative flex size-2">
@@ -83,8 +84,8 @@ export function Contact() {
               </nav>
             </div>
 
-            <Stagger className="grid gap-6 p-6 md:p-8 lg:grid-cols-2 lg:gap-8" stagger={0.1}>
-              <StaggerItem className="card-hover flex h-full flex-col rounded-lg border border-border bg-card/50 p-5 md:p-6">
+            <Stagger className="grid gap-6 p-4 sm:p-6 md:p-8 lg:grid-cols-2 lg:gap-8" stagger={0.1}>
+              <StaggerItem className="card-hover flex h-full flex-col rounded-lg border border-border bg-card/50 p-4 sm:p-5 md:p-6">
                 <p className="font-mono text-[11px] font-medium tracking-widest text-muted-gh uppercase">
                   Open to
                 </p>

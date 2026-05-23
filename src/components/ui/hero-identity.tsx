@@ -17,7 +17,7 @@ export function HeroIdentity({ className }: HeroIdentityProps) {
   return (
     <div
       className={cn(
-        "flex items-center gap-4 text-left sm:gap-8 lg:gap-10",
+        "flex items-center gap-3 text-left max-sm:gap-3 sm:gap-8 lg:gap-10",
         className
       )}
     >
@@ -39,7 +39,7 @@ export function HeroIdentity({ className }: HeroIdentityProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15, duration: 0.45 }}
           >
-            <h1 className="flex flex-wrap items-baseline gap-x-2 text-[2rem] font-bold leading-none tracking-tight sm:text-4xl lg:text-5xl">
+            <h1 className="flex flex-wrap items-baseline gap-x-1.5 text-[1.65rem] font-bold leading-[1.05] tracking-tight max-[400px]:text-[1.5rem] sm:gap-x-2 sm:text-4xl sm:leading-none lg:text-5xl">
               <span className="text-fg">{firstName}</span>
               {lastName ? (
                 <motion.span
@@ -64,7 +64,7 @@ export function HeroIdentity({ className }: HeroIdentityProps) {
             transition={{ delay: 0.22, duration: 0.4 }}
           >
             <motion.span
-              className="inline-flex items-center gap-2 rounded-full bg-muted px-3 py-1 text-sm font-medium text-fg"
+              className="inline-flex max-w-full items-center gap-1.5 rounded-full bg-muted px-2.5 py-1 text-xs font-medium text-fg sm:gap-2 sm:px-3 sm:text-sm"
               whileHover={{ scale: 1.03 }}
               transition={{ type: "spring", stiffness: 400, damping: 20 }}
             >
@@ -91,7 +91,7 @@ export function HeroIdentity({ className }: HeroIdentityProps) {
             {heroHighlights.map((tag, i) => (
               <motion.span
                 key={tag}
-                className="rounded-full bg-muted px-2.5 py-0.5 text-[11px] font-medium text-muted-gh lg:text-xs"
+                className="rounded-full bg-muted px-2 py-0.5 text-[10px] font-medium text-muted-gh sm:px-2.5 sm:text-[11px] lg:text-xs"
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{

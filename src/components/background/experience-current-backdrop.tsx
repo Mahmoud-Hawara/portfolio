@@ -84,8 +84,8 @@ export function ExperienceCurrentBackdrop() {
       {/* Bottom fade into prior experience */}
       <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-surface/90 to-transparent" />
 
-      {/* Accent edge */}
-      <div className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent sm:inset-x-8" />
+      {/* Accent edge — aligned to section padding */}
+      <div className="absolute inset-x-3 top-0 h-px bg-gradient-to-r from-transparent via-primary/35 to-transparent sm:inset-x-6" />
     </div>
   );
 }

@@ -41,7 +41,7 @@ export function Header() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: reduced ? 0 : 0.45, ease: EASE_OUT }}
     >
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 md:px-6">
+      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-3.5 sm:h-16 sm:px-4 md:px-6">
         <Link
           href="#"
           className="flex items-center gap-3 text-fg"

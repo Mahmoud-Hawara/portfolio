@@ -35,7 +35,7 @@ export function AchievementHighlights({
             key={item.id}
             role="listitem"
             className={cn(
-              "relative flex flex-col items-center justify-center px-3 py-5 text-center transition-colors sm:py-6",
+              "relative flex flex-col items-center justify-center px-2 py-4 text-center transition-colors sm:px-3 sm:py-6",
               achievementAccentHover[item.accent]
             )}
           >
@@ -48,13 +48,13 @@ export function AchievementHighlights({
             />
             <span
               className={cn(
-                "font-mono text-2xl font-semibold tracking-tight tabular-nums sm:text-[1.65rem]",
+                "font-mono text-xl font-semibold tracking-tight tabular-nums sm:text-2xl sm:text-[1.65rem]",
                 achievementAccentValue[item.accent]
               )}
             >
               {item.value}
             </span>
-            <span className="mt-2 max-w-[9.5rem] text-[11px] leading-snug font-medium text-fg">
+            <span className="mt-2 max-w-[9.5rem] text-[10px] leading-snug font-medium text-fg sm:text-[11px]">
               {item.label}
             </span>
             {item.sublabel ? (

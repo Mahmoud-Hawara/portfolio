@@ -25,12 +25,12 @@ function HeroSocialIcon({
 export function HeroSocialLinks({ className }: { className?: string }) {
   return (
     <nav className={cn(className)} aria-label="Social profiles">
-      <ul className="flex flex-wrap items-center justify-start gap-y-1.5 lg:flex-nowrap">
+      <ul className="flex flex-wrap items-center justify-start gap-y-1 max-sm:gap-x-0 sm:gap-y-1.5 lg:flex-nowrap">
         {heroSocials.map((social, index) => (
           <li key={social.label} className="flex items-center">
             {index > 0 ? (
               <span
-                className="mx-2.5 flex h-5 items-center text-xs leading-none text-muted-gh/35"
+                className="mx-1.5 flex h-5 items-center text-xs leading-none text-muted-gh/35 sm:mx-2.5"
                 aria-hidden
               >
                 ·

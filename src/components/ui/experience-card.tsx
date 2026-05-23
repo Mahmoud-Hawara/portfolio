@@ -11,21 +11,35 @@ import { cn } from "@/lib/utils";
 
 type ExperienceCardProps = {
   job: ExperienceEntry;
+  /** When true, cards share one outer frame on large screens (no double borders). */
+  grouped?: boolean;
   className?: string;
 };
 
-export function ExperienceCard({ job, className }: ExperienceCardProps) {
+export function ExperienceCard({
+  job,
+  grouped = false,
+  className,
+}: ExperienceCardProps) {
   const brand = getCompanyBrand(job.company);
   const hasBrandBg = Boolean(brand.cardBg);
 
   return (
     <motion.article
       className={cn(
-        "card-hover group/card relative flex h-full min-h-0 flex-col overflow-hidden rounded-lg border",
+        "card-hover group/card relative flex h-full min-h-0 flex-col overflow-hidden",
+        grouped
+          ? [
+              "rounded-lg border border-border/80 shadow-sm",
+              "lg:rounded-none lg:border-0 lg:shadow-none",
+              "hover:shadow-sm lg:hover:shadow-none",
+            ]
+          : ["rounded-lg border border-border/80 shadow-sm", brand.accentBorder],
         brand.cardBg ?? "bg-surface",
-        brand.accentBorder,
-        brand.accentHover,
-        "transition-all duration-200 hover:shadow-sm",
+        !grouped && brand.accentHover,
+        grouped &&
+          "hover:bg-surface/90 dark:hover:bg-surface/80 lg:hover:bg-transparent lg:dark:hover:bg-transparent",
+        "transition-all duration-200",
         className
       )}
       initial={{ opacity: 0, y: 8 }}
@@ -38,7 +52,7 @@ export function ExperienceCard({ job, className }: ExperienceCardProps) {
         aria-hidden
       />
 
-      <div className="relative z-[1] flex min-h-0 flex-1 flex-col p-5 sm:p-6">
+      <div className="relative z-[1] flex min-h-0 flex-1 flex-col p-4 sm:p-6">
         {hasBrandBg ? (
           <>
             <div

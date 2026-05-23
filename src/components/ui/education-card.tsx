@@ -16,6 +16,7 @@ import {
   getGradeScore,
   getPeriodEndYear,
 } from "@/lib/education-utils";
+import { anchorScroll } from "@/lib/layout-classes";
 import { cn } from "@/lib/utils";
 
 type EducationCardProps = {
@@ -50,7 +51,8 @@ export function EducationCard({
     <motion.article
       id={getEducationEntryId(entry)}
       className={cn(
-        "group/edu relative scroll-mt-28 overflow-hidden rounded-lg border transition-all duration-200",
+        "group/edu relative overflow-hidden rounded-lg border transition-all duration-200",
+        anchorScroll,
         isCancelled
           ? "border-dashed border-border/90 bg-surface/30 opacity-95 hover:border-muted-gh/50 hover:bg-muted/15"
           : "border-border/80 bg-surface/40 hover:border-border hover:bg-surface hover:shadow-md",

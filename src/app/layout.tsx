@@ -29,6 +29,12 @@ const mono = IBM_Plex_Mono({
   display: "swap",
 });
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
+
 export const metadata: Metadata = {
   title: `${personal.name} · Software Engineer`,
   description: personal.tagline,
@@ -59,7 +65,7 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${inter.variable} ${heading.variable} ${mono.variable} h-full scroll-smooth`}
     >
-      <body className="min-h-full flex flex-col font-sans">
+      <body className="flex min-h-full max-w-[100vw] flex-col font-sans">
         <ThemeProvider>
           <TooltipProvider>
             <PageIntro>

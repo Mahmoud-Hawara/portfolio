@@ -54,7 +54,7 @@ export function EducationMilestoneCard({
         </span>
       </div>
 
-      <p className="mt-0.5 truncate text-[8px] sm:text-[9px]">
+      <p className="mt-0.5 text-[8px] leading-snug max-sm:whitespace-normal sm:truncate sm:text-[9px]">
         <span className="font-medium text-gh-link">{item.label}</span>
         <span className="text-muted-gh"> · {item.school}</span>
         {item.detail ? (

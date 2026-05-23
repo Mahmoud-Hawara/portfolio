@@ -5,14 +5,12 @@ import { FadeIn } from "@/components/motion/fade-in";
 import { AchievementCards } from "@/components/ui/achievement-cards";
 import { AchievementHighlights } from "@/components/ui/achievement-highlights";
 import { achievementHighlights, achievements } from "@/data/portfolio";
+import { containerShell, sectionShell } from "@/lib/layout-classes";
 
 export function Achievements() {
   return (
-    <section
-      id="achievements"
-      className="border-t border-border py-20 md:py-28"
-    >
-      <div className="mx-auto max-w-6xl px-4 md:px-6">
+    <section id="achievements" className={sectionShell}>
+      <div className={containerShell}>
         <AnimatedSectionHeading
           index="05 — Achievements"
           title="Competitive milestones"

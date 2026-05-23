@@ -32,7 +32,7 @@ export function ProjectCard({
   return (
     <motion.article
       className={cn(
-        "card-hover group flex h-full flex-col rounded-md border border-border bg-surface p-5 md:p-6",
+        "card-hover group flex h-full flex-col rounded-md border border-border bg-surface p-4 sm:p-5 md:p-6",
         featured && "md:col-span-2",
         className
       )}
@@ -41,7 +41,7 @@ export function ProjectCard({
       <div className="mb-3 flex items-start justify-between gap-4">
         <div>
           <p className="font-mono text-xs text-muted-gh">{year}</p>
-          <h3 className="mt-1 text-lg font-semibold text-fg transition-colors group-hover:text-link">
+          <h3 className="mt-1 text-base font-semibold text-fg transition-colors group-hover:text-link sm:text-lg">
             {title}
           </h3>
         </div>

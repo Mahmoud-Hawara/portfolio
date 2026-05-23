@@ -4,11 +4,12 @@ import { AnimatedSectionHeading } from "@/components/motion/animated-section-hea
 import { FadeIn } from "@/components/motion/fade-in";
 import { EducationList } from "@/components/ui/education-list";
 import { educationEntries } from "@/data/portfolio";
+import { containerShell, sectionShell } from "@/lib/layout-classes";
 
 export function Education() {
   return (
-    <section id="education" className="border-t border-border py-20 md:py-28">
-      <div className="mx-auto max-w-6xl px-4 md:px-6">
+    <section id="education" className={sectionShell}>
+      <div className={containerShell}>
         <AnimatedSectionHeading
           index="01 — Education"
           title="Academic background"
@@ -22,7 +23,7 @@ export function Education() {
               scholarship at <span className="font-medium text-fg">GUC</span> in 2025.
             </p>
           }
-          subtitleClassName="border-l-2 border-primary/35 pl-4"
+          subtitleClassName="border-l-2 border-primary/35 pl-3 max-sm:text-sm sm:pl-4"
         />
 
         <FadeIn className="mt-8 md:mt-10">

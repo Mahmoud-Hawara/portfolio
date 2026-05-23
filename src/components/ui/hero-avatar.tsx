@@ -18,7 +18,7 @@ export function HeroAvatar({ className }: HeroAvatarProps) {
       transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
     >
       <motion.div
-        className="group/avatar relative w-28 min-[400px]:w-[7.25rem] sm:w-[8.75rem] md:w-40 lg:w-44"
+        className="group/avatar relative w-[6.25rem] min-[400px]:w-28 sm:w-[8.75rem] md:w-40 lg:w-44"
         whileHover={{ y: -3 }}
         transition={{ type: "spring", stiffness: 380, damping: 26 }}
       >
@@ -52,7 +52,7 @@ export function HeroAvatar({ className }: HeroAvatarProps) {
         </div>
 
         <motion.span
-          className="absolute -bottom-1.5 -right-1.5 z-30 flex items-center gap-1 rounded-full border border-border/90 bg-card py-px pr-1.5 pl-1 shadow-md ring-1 ring-background backdrop-blur-md sm:-bottom-2.5 sm:-right-2.5 sm:gap-1.5 sm:py-1 sm:pr-2.5 sm:pl-1.5 sm:shadow-lg sm:ring-2"
+          className="absolute -bottom-1 -right-1 z-30 flex items-center gap-0.5 rounded-full border border-border/90 bg-card py-px pr-1 pl-0.5 shadow-md ring-1 ring-background backdrop-blur-md sm:-bottom-2.5 sm:-right-2.5 sm:gap-1.5 sm:py-1 sm:pr-2.5 sm:pl-1.5 sm:shadow-lg sm:ring-2"
           title={personal.availability}
           animate={{ y: [0, -3, 0] }}
           transition={{
@@ -65,7 +65,7 @@ export function HeroAvatar({ className }: HeroAvatarProps) {
             <span className="absolute inline-flex size-full animate-ping rounded-full bg-primary/50 opacity-60" />
             <span className="relative size-2 rounded-full bg-primary" />
           </span>
-          <span className="text-[10px] font-medium text-fg sm:text-xs">Available</span>
+          <span className="text-[9px] font-medium text-fg sm:text-xs">Available</span>
         </motion.span>
       </motion.div>
     </motion.div>

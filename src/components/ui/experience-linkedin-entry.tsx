@@ -69,7 +69,7 @@ export function ExperienceLinkedInEntry({
 
       <div
         className={cn(
-          "relative overflow-hidden rounded-xl border border-border/70 bg-surface/40 p-4 shadow-sm backdrop-blur-[2px] sm:p-5",
+          "relative overflow-hidden rounded-xl border border-border/70 bg-surface/40 p-3.5 shadow-sm backdrop-blur-[2px] sm:p-5",
           "transition-all duration-200",
           "hover:bg-surface/90 hover:shadow-md",
           brand.accentHover

@@ -28,7 +28,7 @@ export function EducationPathway({ milestones, className }: EducationPathwayProp
         ) : null}
       </div>
 
-      <ul className="grid grid-cols-3 gap-1.5 sm:gap-2">
+      <ul className="grid grid-cols-1 gap-2 max-sm:gap-2 sm:grid-cols-3 sm:gap-2">
         {milestones.map((item) => (
           <li key={`${item.year}-${item.school}`}>
             <EducationMilestoneCard item={item} />

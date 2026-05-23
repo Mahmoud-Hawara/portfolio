@@ -23,6 +23,7 @@ import {
 import { useMemo, useState } from "react";
 import type { TechGroup, TechStackSection } from "@/data/portfolio";
 import { TechItemIcon } from "@/components/ui/tech-item-icon";
+import { anchorScroll } from "@/lib/layout-classes";
 import { cn } from "@/lib/utils";
 
 const groupIcons: Record<string, LucideIcon> = {
@@ -154,8 +155,8 @@ export function TechStackManifest({ groups, sections }: TechStackManifestProps) 
   }
 
   return (
-    <div className="mt-10">
-      <div className="mb-5 flex flex-col gap-3 rounded-lg border border-border bg-card/40 px-4 py-3 sm:flex-row sm:items-center sm:justify-between md:px-5">
+    <div className="mt-8 sm:mt-10">
+      <div className="mb-5 flex flex-col gap-3 rounded-lg border border-border bg-card/40 px-3 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-4 md:px-5">
         <p className="font-mono text-xs text-muted-gh" aria-live="polite">
           <span className="font-semibold text-fg tabular-nums">
             {hasQuery ? visibleGroups.length : groups.length}
@@ -270,7 +271,7 @@ export function TechStackManifest({ groups, sections }: TechStackManifestProps) 
                 <div
                   key={section.id}
                   id={`tech-section-${section.id}`}
-                  className="scroll-mt-28"
+                  className={anchorScroll}
                 >
                   <div
                     className={cn(
@@ -310,7 +311,8 @@ export function TechStackManifest({ groups, sections }: TechStackManifestProps) 
                         viewport={{ once: true, margin: "-40px" }}
                         transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                         className={cn(
-                          "group/row relative scroll-mt-28 grid gap-x-4 gap-y-2 border-b border-l-2 border-border py-5 pl-4 transition-colors duration-200",
+                          "group/row relative grid gap-x-4 gap-y-2 border-b border-l-2 border-border py-4 pl-3 transition-colors duration-200 sm:py-5 sm:pl-4",
+                          anchorScroll,
                           rowPersonal
                             ? "hover:border-l-gh-link hover:bg-muted/25 focus-within:border-l-gh-link"
                             : "hover:border-l-primary hover:bg-muted/25 focus-within:border-l-primary",
@@ -350,7 +352,7 @@ export function TechStackManifest({ groups, sections }: TechStackManifestProps) 
                           <ul className="flex flex-wrap gap-2">
                             {items.map((item) => (
                               <li key={item}>
-                                <span className="inline-flex items-center gap-1.5 rounded-md border border-border/70 bg-background/60 px-2 py-1 text-sm text-fg transition-colors hover:border-border hover:bg-background">
+                                <span className="inline-flex items-center gap-1 rounded-md border border-border/70 bg-background/60 px-1.5 py-0.5 text-xs text-fg transition-colors hover:border-border hover:bg-background sm:gap-1.5 sm:px-2 sm:py-1 sm:text-sm">
                                   <TechItemIcon name={item} />
                                   <HighlightMatch
                                     text={item}

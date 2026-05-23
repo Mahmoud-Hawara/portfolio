@@ -22,7 +22,7 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="relative overflow-x-hidden pt-24 pb-12 sm:pt-28 sm:pb-14 md:pt-36 md:pb-16 lg:pt-40 lg:pb-20"
+      className="relative overflow-x-hidden pt-[4.75rem] pb-10 sm:pt-28 sm:pb-14 md:pt-36 md:pb-16 lg:pt-40 lg:pb-20"
     >
       <div
         className="pointer-events-none absolute inset-0 grid-pattern opacity-30"
@@ -31,15 +31,15 @@ export function Hero() {
       <div className="pointer-events-none absolute inset-0 hero-glow" aria-hidden />
       <HeroWave />
 
-      <div className="relative z-[1] mx-auto w-full max-w-7xl px-4 sm:px-6 md:px-10 lg:max-w-[90rem] lg:px-14 xl:px-20">
-        <div className="flex flex-col gap-6 sm:gap-5 lg:grid lg:items-center lg:grid-cols-[auto_minmax(360px,460px)] lg:justify-center lg:gap-5 xl:grid-cols-[auto_minmax(400px,500px)] xl:gap-6">
+      <div className="relative z-[1] mx-auto w-full max-w-7xl px-3.5 sm:px-6 md:px-10 lg:max-w-[90rem] lg:px-14 xl:px-20">
+        <div className="flex flex-col gap-5 sm:gap-5 lg:grid lg:items-center lg:grid-cols-[auto_minmax(360px,460px)] lg:justify-center lg:gap-5 xl:grid-cols-[auto_minmax(400px,500px)] xl:gap-6">
           <div className="flex min-w-0 flex-col gap-4 sm:gap-4 lg:order-1">
             <FadeIn>
               <HeroIdentity />
             </FadeIn>
 
             <FadeIn delay={0.1}>
-              <p className="tagline-accent max-w-xl text-[15px] leading-relaxed text-muted-gh sm:text-base md:text-lg">
+              <p className="tagline-accent max-w-xl text-sm leading-relaxed text-muted-gh sm:text-base md:text-lg">
                 {personal.tagline}
               </p>
             </FadeIn>
@@ -58,7 +58,7 @@ export function Hero() {
             </FadeIn>
 
             <FadeIn delay={0.2}>
-              <div className="card-hover flex h-9 w-full max-w-xl items-center rounded-md border border-border bg-surface/80 px-3 font-mono text-xs text-link sm:h-8 sm:text-sm">
+              <div className="card-hover flex h-9 w-full min-w-0 max-w-xl items-center overflow-hidden rounded-md border border-border bg-surface/80 px-2.5 font-mono text-[11px] text-link sm:h-8 sm:px-3 sm:text-sm">
                 <TypingRoles roles={roles} />
               </div>
             </FadeIn>

@@ -8,6 +8,7 @@ import { ExperienceCurrentBackdrop } from "@/components/background/experience-cu
 import { AnimatedSectionHeading } from "@/components/motion/animated-section-heading";
 import { experience } from "@/data/portfolio";
 import { isCurrentRole, sortCurrentJobs } from "@/lib/experience-utils";
+import { anchorScroll, containerShell, sectionShell } from "@/lib/layout-classes";
 import { cn } from "@/lib/utils";
 
 export function Experience() {
@@ -16,8 +17,8 @@ export function Experience() {
   );
   const pastJobs = experience.filter((job) => !isCurrentRole(job.period));
   return (
-    <section id="experience" className="border-t border-border py-20 md:py-28">
-      <div className="mx-auto max-w-6xl px-4 md:px-6">
+    <section id="experience" className={sectionShell}>
+      <div className={containerShell}>
         <AnimatedSectionHeading
             index="02 — Experience"
             title="Professional experience"
@@ -34,7 +35,7 @@ export function Experience() {
                   </span>
                   .
                 </p>
-                <p className="mt-3 text-sm leading-relaxed text-muted-gh/90 md:text-[15px]">
+                <p className="mt-3 hidden text-sm leading-relaxed text-muted-gh/90 sm:block md:text-[15px]">
                   Below: what I&apos;m doing now, then earlier roles in
                   engineering, competitive programming, and academia — each with
                   scope, stack, and outcomes.
@@ -45,11 +46,15 @@ export function Experience() {
           />
 
         <div className="relative mt-8">
-          <div className="card-hover relative overflow-hidden rounded-xl border border-border bg-card/85 shadow-sm ring-1 ring-border/50 backdrop-blur-sm dark:bg-card/75">
+          <div className="relative overflow-hidden rounded-xl border border-border bg-card shadow-sm dark:bg-card/90">
           {currentJobs.length > 0 ? (
             <div
               id="experience-active"
-              className="relative scroll-mt-28 overflow-hidden border-b border-border px-4 py-6 sm:px-6 sm:py-8"
+              className={cn(
+                "relative overflow-hidden px-3 py-5 sm:px-6 sm:py-8",
+                pastJobs.length > 0 && "border-b border-border",
+                anchorScroll
+              )}
             >
               <ExperienceCurrentBackdrop />
 
@@ -58,24 +63,31 @@ export function Experience() {
                   title="Current positions"
                   description="Active roles in software engineering and academia."
                   count={currentJobs.length}
-                  className="mb-5 border-b-0 border-l-0 pb-0 pl-0"
+                  className="mb-5 border-b border-border/70 border-l-0 pb-4 pl-0"
                 />
 
                 <div
                   className={cn(
-                    "grid items-stretch gap-5",
-                    currentJobs.length > 1 && "lg:grid-cols-2"
+                    "grid items-stretch gap-4",
+                    currentJobs.length > 1 &&
+                      "lg:grid-cols-2 lg:gap-0 lg:overflow-hidden lg:rounded-lg lg:border lg:border-border/80"
                   )}
                 >
                   {currentJobs.map((job, index) => (
                     <FadeIn
                       key={`${job.company}-${job.period}-featured`}
-                      className="h-full"
+                      className="h-full min-w-0"
                       delay={0.08 + index * 0.04}
                     >
                       <ExperienceCard
                         job={job}
-                        className="h-full bg-card/80 shadow-md ring-1 ring-border/60 backdrop-blur-md dark:bg-card/70"
+                        grouped={currentJobs.length > 1}
+                        className={cn(
+                          "h-full bg-card/90 backdrop-blur-sm dark:bg-card/80",
+                          currentJobs.length > 1 &&
+                            index === 0 &&
+                            "lg:border-r lg:border-border/80"
+                        )}
                       />
                     </FadeIn>
                   ))}
@@ -87,7 +99,10 @@ export function Experience() {
           {pastJobs.length > 0 ? (
             <div
               id="experience-timeline"
-              className="scroll-mt-28 bg-gradient-to-b from-surface/30 to-surface/60 px-4 py-6 sm:px-6 sm:py-8"
+              className={cn(
+                "bg-gradient-to-b from-surface/30 to-surface/60 px-3 py-5 sm:px-6 sm:py-8",
+                anchorScroll
+              )}
             >
               <FadeIn delay={0.1}>
                 <ExperienceSectionLabel

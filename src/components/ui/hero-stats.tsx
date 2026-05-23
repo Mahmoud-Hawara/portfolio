@@ -12,7 +12,7 @@ export function HeroStats({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "card-hover w-full max-w-xl rounded-md border border-border bg-surface/80 px-3 py-3 font-mono text-sm",
+        "card-hover w-full max-w-xl rounded-md border border-border bg-surface/80 px-2.5 py-2.5 font-mono text-xs sm:px-3 sm:py-3 sm:text-sm",
         className
       )}
     >

@@ -7,19 +7,19 @@ export function HeroActions({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "flex w-full max-w-xl flex-row items-stretch gap-2 sm:gap-3",
+        "flex w-full max-w-xl flex-col items-stretch gap-2 max-sm:max-w-none sm:flex-row sm:gap-3",
         className
       )}
     >
       <LinkButton
         href="#projects"
-        className="btn-primary-gh inline-flex h-11 shrink-0 items-center justify-center gap-1.5 px-4 text-sm font-semibold shadow-sm sm:gap-2 sm:px-6 sm:min-w-[10.5rem]"
+        className="btn-primary-gh inline-flex h-11 w-full shrink-0 items-center justify-center gap-1.5 px-4 text-sm font-semibold shadow-sm sm:w-auto sm:gap-2 sm:px-6 sm:min-w-[10.5rem]"
       >
         See my work
         <ArrowRight className="size-4 shrink-0" aria-hidden />
       </LinkButton>
 
-      <div className="card-hover inline-flex min-h-11 min-w-0 flex-1 flex-row overflow-hidden rounded-lg border border-border bg-card/60 sm:max-w-md sm:flex-none">
+      <div className="card-hover inline-flex min-h-11 min-w-0 w-full flex-1 flex-row overflow-hidden rounded-lg border border-border bg-card/60 sm:max-w-md sm:flex-none">
         <LinkButton
           href="#contact"
           className="inline-flex h-11 min-h-11 min-w-0 flex-1 items-center justify-center gap-1.5 rounded-none border-0 bg-transparent px-2.5 text-sm font-medium text-foreground transition-colors hover:bg-muted sm:gap-2 sm:px-5"

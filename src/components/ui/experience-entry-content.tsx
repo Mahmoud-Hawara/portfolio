@@ -92,7 +92,7 @@ export function ExperienceEntryHeader({
             <div
               className={cn(
                 "flex items-start justify-between gap-3",
-                isTimeline && "gap-4"
+                isTimeline && "max-sm:flex-col max-sm:gap-1.5 sm:gap-4"
               )}
             >
               <div className="min-w-0">
@@ -110,7 +110,7 @@ export function ExperienceEntryHeader({
               </div>
               {isTimeline ? (
                 <time
-                  className="shrink-0 rounded-md border border-border/80 bg-muted/25 px-2 py-1 text-[10px] font-medium tabular-nums text-muted-gh sm:text-[11px]"
+                  className="max-w-full shrink-0 self-start rounded-md border border-border/80 bg-muted/25 px-2 py-1 text-[10px] font-medium tabular-nums text-muted-gh sm:text-[11px]"
                   dateTime={job.period}
                 >
                   {job.period}
@@ -230,6 +230,8 @@ export function ExperienceEntrySkills({
 }) {
   if (!job.tags?.length) return null;
 
+  const scrollTagsOnMobile = job.tags.length > 6;
+
   return (
     <div
       className={cn(
@@ -241,10 +243,16 @@ export function ExperienceEntrySkills({
       <p className="mb-2 font-mono text-[10px] font-medium uppercase tracking-wider text-muted-gh">
         {variant === "featured" ? "Technologies" : "Stack"}
       </p>
-      <ul className="flex flex-wrap gap-1.5">
+      <ul
+        className={cn(
+          "flex flex-wrap gap-1.5",
+          scrollTagsOnMobile &&
+            "tag-scroll-x max-sm:-mx-0.5 max-sm:flex-nowrap max-sm:overflow-x-auto max-sm:pb-1 max-sm:px-0.5"
+        )}
+      >
         {job.tags.map((tag) => (
-          <li key={tag}>
-            <span className="inline-flex items-center gap-1 rounded-full border border-border/80 bg-muted/30 px-2.5 py-0.5 text-[11px] font-medium text-muted-gh transition-colors hover:border-gh-link/25 hover:text-fg">
+          <li key={tag} className={scrollTagsOnMobile ? "shrink-0" : undefined}>
+            <span className="inline-flex items-center gap-1 rounded-full border border-border/80 bg-muted/30 px-2 py-0.5 text-[10px] font-medium text-muted-gh transition-colors hover:border-gh-link/25 hover:text-fg max-sm:whitespace-nowrap sm:px-2.5 sm:text-[11px]">
               <TechItemIcon name={tag} className="size-3 opacity-70" />
               {tag}
             </span>

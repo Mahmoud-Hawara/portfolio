@@ -4,14 +4,12 @@ import { AnimatedSectionHeading } from "@/components/motion/animated-section-hea
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { VolunteeringEntryCard } from "@/components/ui/volunteering-entry";
 import { volunteering } from "@/data/portfolio";
+import { containerShell, sectionShell } from "@/lib/layout-classes";
 
 export function Volunteering() {
   return (
-    <section
-      id="volunteering"
-      className="border-t border-border py-20 md:py-28"
-    >
-      <div className="mx-auto max-w-6xl px-4 md:px-6">
+    <section id="volunteering" className={sectionShell}>
+      <div className={containerShell}>
         <AnimatedSectionHeading
           index="06 — Volunteering"
           title="Community & outreach"
