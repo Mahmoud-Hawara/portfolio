@@ -44,14 +44,14 @@ export function AchievementCards({ items }: AchievementCardsProps) {
             >
               <li
                 className={cn(
-                  "card-hover flex h-full flex-col rounded-lg border border-border border-l-[3px] bg-card/80 p-5 md:p-6",
+                  "card-hover flex h-full flex-col rounded-2xl border border-border/70 border-l-[3px] bg-card/85 p-5 shadow-sm md:p-6",
                   achievementAccentBorder[item.accent]
                 )}
               >
                 <div className="flex items-start justify-between gap-3">
                   <span
                     className={cn(
-                      "flex size-9 items-center justify-center rounded-md border border-border bg-surface",
+                      "flex size-9 items-center justify-center rounded-xl border border-border/70 bg-surface shadow-sm",
                       achievementAccentValue[item.accent]
                     )}
                   >
@@ -69,7 +69,7 @@ export function AchievementCards({ items }: AchievementCardsProps) {
                 <h3 className="mt-4 text-base font-semibold tracking-tight text-fg">
                   {item.title}
                 </h3>
-                <p className="mt-1 font-mono text-[11px] text-muted-gh">
+                <p className="label-soft mt-1">
                   {item.period}
                 </p>
                 <p className="mt-3 text-sm leading-relaxed text-muted-gh">

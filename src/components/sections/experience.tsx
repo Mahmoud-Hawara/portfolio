@@ -5,10 +5,17 @@ import { ExperienceCard } from "@/components/ui/experience-card";
 import { ExperiencePriorTimeline } from "@/components/ui/experience-prior-timeline";
 import { ExperienceSectionLabel } from "@/components/ui/experience-section-label";
 import { ExperienceCurrentBackdrop } from "@/components/background/experience-current-backdrop";
+import { SectionGlow } from "@/components/background/section-glow";
 import { AnimatedSectionHeading } from "@/components/motion/animated-section-heading";
 import { experience } from "@/data/portfolio";
 import { isCurrentRole, sortCurrentJobs } from "@/lib/experience-utils";
-import { anchorScroll, containerShell, sectionShell } from "@/lib/layout-classes";
+import {
+  anchorScroll,
+  containerShell,
+  sectionShell,
+  signaturePanel,
+  subtitleCallout,
+} from "@/lib/layout-classes";
 import { cn } from "@/lib/utils";
 
 export function Experience() {
@@ -17,11 +24,12 @@ export function Experience() {
   );
   const pastJobs = experience.filter((job) => !isCurrentRole(job.period));
   return (
-    <section id="experience" className={sectionShell}>
-      <div className={containerShell}>
+    <section id="experience" className={cn("relative overflow-hidden", sectionShell)}>
+      <SectionGlow tint="green" className="right-[-15%] top-12" />
+      <div className={cn("relative z-[1]", containerShell)}>
         <AnimatedSectionHeading
             index="02 — Experience"
-            title="Professional experience"
+            title="Where I've worked"
             subtitle={
               <>
                 <p>
@@ -36,17 +44,16 @@ export function Experience() {
                   .
                 </p>
                 <p className="mt-3 hidden text-sm leading-relaxed text-muted-gh/90 sm:block md:text-[15px]">
-                  Below: what I&apos;m doing now, then earlier roles in
-                  engineering, competitive programming, and academia — each with
-                  scope, stack, and outcomes.
+                  What I&apos;m up to now, then a look back at earlier roles —
+                  what I built, what I taught, and what I learned along the way.
                 </p>
               </>
             }
-            subtitleClassName="border-l-2 border-primary/35 pl-4"
+            subtitleClassName={subtitleCallout}
           />
 
         <div className="relative mt-8">
-          <div className="relative overflow-hidden rounded-xl border border-border bg-card shadow-sm dark:bg-card/90">
+          <div className={cn("relative", signaturePanel)}>
           {currentJobs.length > 0 ? (
             <div
               id="experience-active"
@@ -61,16 +68,16 @@ export function Experience() {
               <div className="relative z-[1]">
                 <ExperienceSectionLabel
                   title="Current positions"
-                  description="Active roles in software engineering and academia."
+                  description="What I'm doing today."
                   count={currentJobs.length}
-                  className="mb-5 border-b border-border/70 border-l-0 pb-4 pl-0"
+                  className="mb-5 border-b border-border/60 pb-4"
                 />
 
                 <div
                   className={cn(
                     "grid items-stretch gap-4",
                     currentJobs.length > 1 &&
-                      "lg:grid-cols-2 lg:gap-0 lg:overflow-hidden lg:rounded-lg lg:border lg:border-border/80"
+                      "lg:grid-cols-2 lg:gap-0 lg:overflow-hidden lg:rounded-2xl lg:border lg:border-border/70"
                   )}
                 >
                   {currentJobs.map((job, index) => (
@@ -82,6 +89,7 @@ export function Experience() {
                       <ExperienceCard
                         job={job}
                         grouped={currentJobs.length > 1}
+                        signature={currentJobs.length === 1}
                         className={cn(
                           "h-full bg-card/90 backdrop-blur-sm dark:bg-card/80",
                           currentJobs.length > 1 &&
@@ -107,7 +115,7 @@ export function Experience() {
               <FadeIn delay={0.1}>
                 <ExperienceSectionLabel
                   title="Prior experience"
-                  description="Earlier roles in reverse chronological order."
+                  description="Everything before that, newest first."
                   count={pastJobs.length}
                   className="mb-4 border-b-0 border-l-0 pb-0 pl-0"
                 />

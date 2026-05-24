@@ -7,11 +7,10 @@ import { Monogram } from "@/components/ui/monogram";
 import { personal } from "@/data/portfolio";
 
 const bootLines = [
-  { text: "$ portfolio init --user mahmoudhawara", delay: 0 },
-  { text: "> Loading software engineering module...", delay: 0.3 },
-  { text: "> Loading competitive programming stats...", delay: 0.6 },
-  { text: "> Mounting teaching & community data...", delay: 0.9 },
-  { text: "> Status: ready ✓", delay: 1.2, accent: true },
+  { text: "Hey — glad you made it here.", delay: 0 },
+  { text: "Pulling up projects, experience, and the fun stuff…", delay: 0.35 },
+  { text: "Almost ready…", delay: 0.65 },
+  { text: "Here we go.", delay: 0.95, accent: true },
 ];
 
 type Phase = "idle" | "playing" | "exit" | "done";
@@ -95,14 +94,14 @@ export function PageIntro({ children }: { children: React.ReactNode }) {
             </div>
           </div>
 
-          <div className="rounded-md border border-border bg-card px-4 py-4 font-mono text-sm shadow-md">
+          <div className="rounded-2xl border border-border/70 bg-card px-4 py-4 text-sm shadow-lg ring-1 ring-primary/10">
             {bootLines.map((line) => (
               <motion.p
                 key={line.text}
                 className={
                   line.accent
-                    ? "text-primary"
-                    : "text-muted-gh [&:not(:last-child)]:mb-1.5"
+                    ? "font-medium text-primary"
+                    : "text-muted-gh [&:not(:last-child)]:mb-2"
                 }
                 initial={{ opacity: 0, x: -8 }}
                 animate={{ opacity: 1, x: 0 }}

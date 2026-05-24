@@ -197,7 +197,7 @@ export function TechStackManifest({ groups, sections }: TechStackManifestProps) 
       {visibleGroups.length > 0 && !hasQuery ? (
         <nav className="mb-4 space-y-2.5 text-[11px]" aria-label="Jump to skills">
           <p className="flex flex-wrap items-center gap-x-1 gap-y-1 text-muted-gh">
-            <span className="font-mono uppercase tracking-wide">Jump to</span>
+            <span className="text-muted-gh">Jump to</span>
             {visibleSections.map((section, index) => (
               <span key={section.id} className="inline-flex items-center gap-1">
                 {index > 0 ? <span aria-hidden>·</span> : null}

@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Mono, Inter } from "next/font/google";
+import { AmbientMesh } from "@/components/background/ambient-mesh";
+import { GrainOverlay } from "@/components/background/grain-overlay";
 import { PageIntro } from "@/components/motion/page-intro";
 import { ScrollProgress } from "@/components/motion/scroll-progress";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { BackToTop } from "@/components/ui/back-to-top";
 import { Header } from "@/components/layout/header";
 import { AnimatedFooter } from "@/components/layout/animated-footer";
 import { personal } from "@/data/portfolio";
@@ -65,8 +68,10 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${inter.variable} ${heading.variable} ${mono.variable} h-full scroll-smooth`}
     >
-      <body className="flex min-h-full max-w-[100vw] flex-col font-sans">
+      <body className="relative flex min-h-full max-w-[100vw] flex-col font-sans">
         <ThemeProvider>
+          <AmbientMesh />
+          <GrainOverlay />
           <TooltipProvider>
             <PageIntro>
               <ScrollProgress />
@@ -77,10 +82,11 @@ export default function RootLayout({
                 Skip to content
               </a>
               <Header />
-              <main id="main-content" className="flex-1">
+              <main id="main-content" className="relative z-[1] flex-1">
                 {children}
               </main>
               <AnimatedFooter />
+              <BackToTop />
             </PageIntro>
           </TooltipProvider>
         </ThemeProvider>

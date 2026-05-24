@@ -7,7 +7,7 @@ export const personal = {
   title: "Software Engineer",
   availability: "Open to opportunities",
   tagline:
-    "I build reliable backend systems, teach algorithms at scale, and compete at the highest levels of ICPC.",
+    "I build backend systems, teach algorithms, and compete at ICPC — and I really enjoy all three.",
   location: "Cairo, Egypt",
   email: "mahmoudhawara115@gmail.com",
   phone: "+201151239658",
@@ -21,7 +21,7 @@ export const personal = {
   },
 };
 
-export const profilePanelTitle = "Quick snapshot";
+export const profilePanelTitle = "A bit about me";
 
 export const identityPillars = [
   {
@@ -78,7 +78,7 @@ export const educationEntries: EducationEntry[] = [
   {
     school: "German University in Cairo",
     degree: "Master's Degree — Fully Funded Scholarship",
-    period: "2025",
+    period: "2025 – 2026",
     location: "Cairo, Egypt",
     level: "graduate",
     status: "cancelled",
@@ -86,7 +86,7 @@ export const educationEntries: EducationEntry[] = [
     logo: "/logos/guc.png",
     logoClassName: "bg-white border-border/80",
     highlights: [
-      "Awarded a **fully funded Master's scholarship** at GUC in **2025** after completing engineering at Benha University.",
+      "Awarded a **fully funded Master's scholarship** at GUC (**2025–2026**) after completing engineering at Benha University.",
       "Started the Master's journey before choosing to transition fully toward **software engineering** and industry-focused career growth.",
       "Focused on building **real-world engineering experience** and scalable software systems instead of continuing the academic path.",
     ],
@@ -821,9 +821,9 @@ export const stats = [
     value: "Top 3%",
   },
   {
-    id: "icpc_best_rank",
-    label: "Best ICPC regional finish",
-    value: "26th",
+    id: "dept_rank",
+    label: "In department · Benha University",
+    value: "5th",
   },
   {
     id: "ecpc_best_rank",

@@ -77,7 +77,7 @@
   --accent-brand: #1a7f37;
   --surface: #ffffff;
   --surface-elevated: #f6f8fa;
-  --gh-canvas: #f6f8fa;
+  --gh-canvas: #f7f9f8;
   --gh-fg: #1f2328;
   --gh-muted: #656d76;
   --gh-link: #0969da;
@@ -86,7 +86,7 @@
   --gh-dot: #0969da;
   --gh-award: #9a6700;
   --destructive: #cf222e;
-  --border: #d0d7de;
+  --border: #dde3ea;
   --input: #d0d7de;
   --ring: #0969da;
   --chart-1: #1a7f37;
@@ -94,7 +94,7 @@
   --chart-3: #656d76;
   --chart-4: #d0d7de;
   --chart-5: #f6f8fa;
-  --radius: 0.375rem;
+  --radius: 0.75rem;
   --sidebar: #f6f8fa;
   --sidebar-foreground: #1f2328;
   --sidebar-primary: #1a7f37;
@@ -109,7 +109,7 @@
   --gradient-to: #0969da;
   --hero-glow-1: rgba(26, 127, 55, 0.1);
   --hero-glow-2: rgba(9, 105, 218, 0.06);
-  --grid-line: rgba(208, 215, 222, 0.8);
+  --grid-line: rgba(208, 215, 222, 0.45);
   --card-hover-border: #8c959f;
   --card-hover-bg: #f6f8fa;
   --btn-primary: #1a7f37;
@@ -265,6 +265,220 @@
     background-clip: text;
     color: transparent;
   }
+  .text-shimmer {
+    background: linear-gradient(
+      105deg,
+      var(--gradient-from) 0%,
+      var(--gradient-mid) 28%,
+      var(--gradient-to) 52%,
+      var(--gradient-mid) 76%,
+      var(--gradient-from) 100%
+    );
+    background-size: 220% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: text-shimmer 7s ease-in-out infinite;
+  }
+  @keyframes text-shimmer {
+    0%,
+    100% {
+      background-position: 0% center;
+    }
+    50% {
+      background-position: 100% center;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .text-shimmer {
+      animation: none;
+      background-size: 100% auto;
+    }
+    .gradient-frame,
+    .gradient-frame-vivid {
+      animation: none;
+    }
+  }
+  .gradient-frame {
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--primary) 55%, transparent),
+      color-mix(in srgb, var(--gh-link) 50%, transparent),
+      color-mix(in srgb, var(--wave-purple) 35%, transparent)
+    );
+    background-size: 200% 200%;
+    animation: gradient-shift 10s ease infinite;
+  }
+  .gradient-frame-vivid {
+    background: linear-gradient(
+      125deg,
+      color-mix(in srgb, var(--primary) 70%, transparent),
+      color-mix(in srgb, var(--gh-link) 65%, transparent),
+      color-mix(in srgb, var(--wave-cyan) 50%, transparent),
+      color-mix(in srgb, var(--wave-purple) 45%, transparent)
+    );
+    background-size: 300% 300%;
+    animation: gradient-shift 6s ease infinite;
+  }
+  .gradient-frame-inner {
+    background: color-mix(in srgb, var(--card) 92%, var(--background));
+  }
+  @keyframes gradient-shift {
+    0%,
+    100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+  .link-slide {
+    position: relative;
+    text-decoration: none;
+  }
+  .link-slide::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 100%;
+    height: 2px;
+    transform: scaleX(0);
+    transform-origin: left;
+    border-radius: 1px;
+    background: linear-gradient(90deg, var(--primary), var(--gh-link));
+    transition: transform 0.25s ease;
+  }
+  .link-slide:hover::after {
+    transform: scaleX(1);
+  }
+  .highlight-chip {
+    border-radius: 9999px;
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--muted) 80%, transparent),
+      color-mix(in srgb, var(--primary) 8%, var(--muted))
+    );
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, white 50%, transparent),
+      0 1px 2px color-mix(in srgb, black 4%, transparent);
+  }
+  .dark .highlight-chip {
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, white 8%, transparent),
+      0 1px 3px color-mix(in srgb, black 25%, transparent);
+  }
+  .section-glow {
+    position: relative;
+  }
+  .section-glow::before {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    z-index: 0;
+    width: min(92%, 42rem);
+    height: 1px;
+    transform: translateX(-50%);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in srgb, var(--primary) 50%, transparent),
+      color-mix(in srgb, var(--gh-link) 50%, transparent),
+      transparent
+    );
+    opacity: 0.65;
+  }
+  /* —— Coder / editor chrome —— */
+  .code-window {
+    border-radius: 1rem;
+    border: 1px solid color-mix(in srgb, var(--border) 85%, transparent);
+    background: color-mix(in srgb, var(--card) 90%, var(--background));
+    box-shadow:
+      0 1px 2px color-mix(in srgb, black 5%, transparent),
+      inset 0 1px 0 color-mix(in srgb, white 35%, transparent);
+  }
+  .dark .code-window {
+    box-shadow:
+      0 4px 24px -8px color-mix(in srgb, black 50%, transparent),
+      inset 0 1px 0 color-mix(in srgb, white 6%, transparent);
+  }
+  .code-window-body {
+    padding: 0.75rem 0.875rem;
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.75rem;
+    line-height: 1.55;
+  }
+  @media (min-width: 640px) {
+    .code-window-body {
+      font-size: 0.8125rem;
+    }
+  }
+  .code-comment {
+    color: var(--gh-muted);
+    font-style: italic;
+  }
+  .code-keyword {
+    color: var(--gh-link);
+    font-weight: 500;
+  }
+  .code-string {
+    color: var(--primary);
+  }
+  .dark .code-string {
+    color: var(--gh-success);
+  }
+  .code-prop {
+    color: var(--gh-fg);
+  }
+  .code-prompt {
+    color: var(--gh-muted);
+    font-weight: 600;
+    user-select: none;
+  }
+  .code-line-num {
+    display: inline-block;
+    min-width: 1.35rem;
+    padding-right: 0.65rem;
+    text-align: right;
+    color: var(--gh-muted);
+    opacity: 0.45;
+    user-select: none;
+    font-variant-numeric: tabular-nums;
+  }
+  .code-cursor {
+    display: inline-block;
+    width: 0.5rem;
+    height: 1em;
+    margin-left: 1px;
+    vertical-align: text-bottom;
+    background: var(--primary);
+    animation: code-cursor-blink 1s step-end infinite;
+  }
+  @keyframes code-cursor-blink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .code-cursor {
+      animation: none;
+    }
+  }
+
+  .signature-panel {
+    border-radius: 1.25rem;
+    background: color-mix(in srgb, var(--card) 88%, transparent);
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--border) 80%, transparent),
+      0 24px 48px -28px color-mix(in srgb, var(--gh-link) 18%, transparent),
+      0 12px 24px -16px color-mix(in srgb, var(--primary) 12%, transparent);
+  }
   .hero-glow {
     background:
       radial-gradient(ellipse 80% 50% at 50% -20%, var(--hero-glow-1), transparent),
@@ -284,10 +498,10 @@
       transform 0.2s ease;
   }
   .card-hover:hover {
-    border-color: var(--gh-link);
+    border-color: color-mix(in srgb, var(--gh-link) 35%, var(--border));
     background-color: var(--card-hover-bg);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
-    transform: translateY(-2px);
+    box-shadow: 0 10px 28px -12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
   }
   @media (max-width: 639px) {
     .card-hover:hover {
@@ -305,11 +519,25 @@
     display: none;
   }
   .btn-primary-gh {
-    background-color: var(--btn-primary);
+    background: linear-gradient(
+      135deg,
+      var(--btn-primary) 0%,
+      color-mix(in srgb, var(--btn-primary-hover) 85%, var(--gh-link)) 100%
+    );
     color: #ffffff;
+    box-shadow:
+      0 1px 2px color-mix(in srgb, black 8%, transparent),
+      0 8px 20px -6px color-mix(in srgb, var(--btn-primary) 45%, transparent);
   }
   .btn-primary-gh:hover {
-    background-color: var(--btn-primary-hover);
+    background: linear-gradient(
+      135deg,
+      var(--btn-primary-hover) 0%,
+      color-mix(in srgb, var(--gh-link) 40%, var(--btn-primary-hover)) 100%
+    );
+    box-shadow:
+      0 2px 4px color-mix(in srgb, black 10%, transparent),
+      0 12px 28px -8px color-mix(in srgb, var(--btn-primary) 55%, transparent);
   }
   .impact-badge {
     border: 1px solid var(--border);
@@ -355,8 +583,127 @@
       0 12px 24px -12px rgba(0, 0, 0, 0.4);
   }
   .tagline-accent {
-    border-left: 3px solid var(--primary);
-    padding-left: 1rem;
+    border-radius: 1rem;
+    background: color-mix(in srgb, var(--muted) 55%, transparent);
+    padding: 0.875rem 1rem;
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, white 35%, transparent),
+      0 0 0 1px color-mix(in srgb, var(--border) 75%, transparent);
+  }
+  .dark .tagline-accent {
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, white 6%, transparent),
+      0 0 0 1px color-mix(in srgb, var(--border) 85%, transparent);
+  }
+  .label-soft {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--gh-muted);
+    letter-spacing: normal;
+    text-transform: none;
+  }
+  .callout-soft {
+    border-radius: 1rem;
+    background: color-mix(in srgb, var(--muted) 45%, transparent);
+    padding: 0.875rem 1rem;
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--border) 70%, transparent);
+  }
+
+  /* —— Education (modern glass timeline) —— */
+  .education-shell {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1.5rem;
+    border: 1px solid color-mix(in srgb, var(--border) 65%, transparent);
+    background: linear-gradient(
+      165deg,
+      color-mix(in srgb, var(--card) 92%, transparent) 0%,
+      color-mix(in srgb, var(--background) 30%, var(--card)) 100%
+    );
+    box-shadow:
+      0 1px 0 color-mix(in srgb, white 40%, transparent) inset,
+      0 24px 48px -28px color-mix(in srgb, var(--gh-link) 22%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  .dark .education-shell {
+    box-shadow:
+      0 1px 0 color-mix(in srgb, white 6%, transparent) inset,
+      0 28px 56px -24px color-mix(in srgb, black 55%, transparent);
+  }
+  .education-shell::before {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(
+        ellipse 70% 50% at 0% 0%,
+        color-mix(in srgb, var(--gh-link) 10%, transparent),
+        transparent 55%
+      ),
+      radial-gradient(
+        ellipse 60% 45% at 100% 100%,
+        color-mix(in srgb, var(--primary) 12%, transparent),
+        transparent 50%
+      );
+  }
+  .education-card {
+    border-radius: 1.25rem;
+    border: 1px solid color-mix(in srgb, var(--border) 72%, transparent);
+    background: color-mix(in srgb, var(--card) 86%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 1px 2px color-mix(in srgb, black 4%, transparent);
+    transition:
+      border-color 0.25s ease,
+      box-shadow 0.25s ease,
+      transform 0.25s ease;
+  }
+  .education-card:hover {
+    border-color: color-mix(in srgb, var(--primary) 28%, var(--border));
+    box-shadow: 0 16px 40px -24px color-mix(in srgb, var(--primary) 18%, transparent);
+    transform: translateY(-2px);
+  }
+  .education-year-marker {
+    border: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--card) 95%, transparent),
+      color-mix(in srgb, var(--muted) 35%, transparent)
+    );
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, white 35%, transparent) inset,
+      0 2px 8px -4px color-mix(in srgb, black 8%, transparent);
+    width: 100%;
+    min-height: 3.25rem;
+    border-radius: 0.75rem;
+    padding: 0.5rem 0.25rem;
+  }
+  .education-year-marker--row {
+    width: auto;
+    min-height: 0;
+    border-radius: 9999px;
+    padding: 0.35rem 0.75rem;
+  }
+  .education-year-connector-h {
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--primary) 45%, transparent),
+      color-mix(in srgb, var(--border) 55%, transparent)
+    );
+  }
+  .education-year-connector {
+    flex-shrink: 0;
+    width: 2px;
+    height: 2rem;
+    margin-top: 0.5rem;
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--primary) 50%, transparent),
+      color-mix(in srgb, var(--border) 65%, transparent)
+    );
   }
   .pillar-green:hover {
     border-color: var(--pillar-hover-green);

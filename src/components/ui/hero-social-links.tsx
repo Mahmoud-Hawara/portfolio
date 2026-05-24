@@ -52,7 +52,7 @@ export function HeroSocialLinks({ className }: { className?: string }) {
                     ? undefined
                     : "noopener noreferrer"
                 }
-                className="group inline-flex h-5 items-center gap-1.5 text-xs leading-none text-muted-gh transition-colors hover:text-link lg:text-[13px]"
+                className="link-slide group inline-flex h-5 items-center gap-1.5 text-xs leading-none text-muted-gh transition-colors hover:text-link lg:text-[13px]"
               >
                 <span className={iconBox}>
                   <HeroSocialIcon

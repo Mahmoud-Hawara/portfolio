@@ -1,5 +1,6 @@
 "use client";
 
+import { SectionGlow } from "@/components/background/section-glow";
 import { WaveBackdrop } from "@/components/background/wave-backdrop";
 import { AnimatedSectionHeading } from "@/components/motion/animated-section-heading";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
@@ -11,12 +12,13 @@ import { cn } from "@/lib/utils";
 export function Projects() {
   return (
     <section id="projects" className={cn("relative overflow-hidden", sectionShell)}>
+      <SectionGlow tint="blue" />
       <WaveBackdrop placement="section" />
       <div className={cn("relative z-[1]", containerShell)}>
         <AnimatedSectionHeading
           index="03 — Projects"
           title="Selected work"
-          subtitle="Products and systems built for real users — with measurable outcomes."
+          subtitle="Things I've built that real people use — and how they turned out."
         />
 
         <Stagger className="grid gap-5 md:grid-cols-2" stagger={0.1}>

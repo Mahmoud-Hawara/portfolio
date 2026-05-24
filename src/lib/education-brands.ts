@@ -41,6 +41,16 @@ const schoolBrandOverrides: Record<string, Partial<EducationBrand>> = {
     accentBorder: "border-border",
     accentGlow: "from-muted/30 via-transparent",
   },
+  "German University in Cairo": {
+    initials: "GUC",
+    className:
+      "bg-[#FFCE00]/15 text-[10px] font-semibold text-[#c41e3a] dark:text-[#FFCE00]",
+    accentBar: "bg-gradient-to-r from-[#DD0000] via-[#FFCE00] to-[#DD0000]",
+    accentBorder: "border-[#DD0000]/30",
+    accentGlow: "from-[#FFCE00]/15 via-[#DD0000]/10",
+    cardBg:
+      "bg-gradient-to-br from-[#FFCE00]/8 via-card/90 to-surface dark:from-[#FFCE00]/6 dark:via-card/85 dark:to-surface",
+  },
 };
 
 export function getEducationBrand(school: string): EducationBrand {

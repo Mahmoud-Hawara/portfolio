@@ -25,7 +25,7 @@ export function EducationSchoolMark({
     return (
       <span
         className={cn(
-          "relative flex shrink-0 items-center justify-center overflow-hidden rounded-md border p-1 shadow-sm",
+          "relative flex shrink-0 items-center justify-center overflow-hidden rounded-xl border p-1.5 shadow-sm",
           brand.accentBorder,
           shellSize,
           logoClassName ?? "bg-background",
@@ -46,7 +46,7 @@ export function EducationSchoolMark({
   return (
     <span
       className={cn(
-        "flex shrink-0 items-center justify-center rounded-md border bg-background shadow-sm",
+        "flex shrink-0 items-center justify-center rounded-xl border bg-background shadow-sm",
         brand.accentBorder,
         shellSize,
         className

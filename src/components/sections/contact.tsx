@@ -11,6 +11,7 @@ import {
   Phone,
 } from "lucide-react";
 import Link from "next/link";
+import { SectionGlow } from "@/components/background/section-glow";
 import { FadeIn } from "@/components/motion/fade-in";
 import { CopyEmailButton } from "@/components/ui/copy-email-button";
 import { LinkButton } from "@/components/ui/link-button";
@@ -22,7 +23,14 @@ import {
   contactOpenTo,
   personal,
 } from "@/data/portfolio";
-import { containerShell, sectionShell } from "@/lib/layout-classes";
+import {
+  containerShell,
+  fieldLabel,
+  sectionShell,
+  signaturePanel,
+  softPanel,
+} from "@/lib/layout-classes";
+import { cn } from "@/lib/utils";
 
 const socialLinks = [
   { label: "GitHub", href: personal.links.github, brand: "github" as const },
@@ -44,16 +52,17 @@ const metaRows = [
 
 export function Contact() {
   return (
-    <section id="contact" className={sectionShell}>
-      <div className={containerShell}>
+    <section id="contact" className={cn("relative overflow-hidden", sectionShell)}>
+      <SectionGlow tint="blue" className="bottom-0 top-auto left-1/2 -translate-x-1/2" />
+      <div className={cn("relative z-[1]", containerShell)}>
         <AnimatedSectionHeading
           index="07 — Contact"
           title="Let's connect"
-          subtitle="Open to engineering roles, collaborations, and mentoring."
+          subtitle="Happy to chat about roles, side projects, or mentoring — just say hi."
         />
 
         <FadeIn delay={0.08} direction="up">
-          <div className="overflow-hidden rounded-xl border border-border bg-card shadow-sm">
+          <div className={signaturePanel}>
             <div className="flex flex-col gap-4 border-b border-border bg-gradient-to-r from-primary/5 via-transparent to-[var(--gh-link)]/5 px-4 py-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:px-6 md:px-8">
               <div className="flex flex-wrap items-center gap-3">
                 <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
@@ -85,11 +94,9 @@ export function Contact() {
             </div>
 
             <Stagger className="grid gap-6 p-4 sm:p-6 md:p-8 lg:grid-cols-2 lg:gap-8" stagger={0.1}>
-              <StaggerItem className="card-hover flex h-full flex-col rounded-lg border border-border bg-card/50 p-4 sm:p-5 md:p-6">
-                <p className="font-mono text-[11px] font-medium tracking-widest text-muted-gh uppercase">
-                  Open to
-                </p>
-                <ul className="mt-4 space-y-2.5 border-l-2 border-primary pl-4 md:pl-5">
+              <StaggerItem className={cn("card-hover flex h-full flex-col p-4 sm:p-5 md:p-6", softPanel)}>
+                <p className={fieldLabel}>Open to</p>
+                <ul className="callout-soft mt-4 space-y-2">
                   {contactOpenTo.map((item) => (
                     <li
                       key={item}
@@ -101,23 +108,21 @@ export function Contact() {
                 </ul>
 
                 <div className="mt-auto border-t border-border/60 pt-6">
-                  <p className="font-mono text-[11px] font-medium tracking-widest text-muted-gh uppercase">
-                    Reach me
-                  </p>
+                  <p className={fieldLabel}>Reach me</p>
                   <p className="mt-2 text-sm leading-relaxed text-muted-gh">
                     Best via email — I typically reply within a couple of days.
                   </p>
                   <LinkButton
                     href={`mailto:${personal.email}`}
-                    className="btn-primary-gh mt-4 inline-flex h-11 w-full items-center justify-center gap-2 text-sm font-semibold"
+                    className="btn-primary-gh mt-4 inline-flex h-11 w-full items-center justify-center gap-2 rounded-2xl text-sm font-semibold"
                   >
                     <Mail className="size-4" aria-hidden />
                     Send email
                   </LinkButton>
-                  <div className="card-hover mt-3 flex items-center gap-2 rounded-md border border-border bg-surface/80 px-3 py-2.5">
+                  <div className="mt-3 flex items-center gap-2 rounded-xl bg-muted/35 px-3 py-2.5 ring-1 ring-border/50">
                     <a
                       href={`mailto:${personal.email}`}
-                      className="min-w-0 flex-1 truncate font-mono text-xs text-link sm:text-sm"
+                      className="min-w-0 flex-1 truncate text-xs text-link sm:text-sm"
                     >
                       {personal.email}
                     </a>
@@ -127,10 +132,8 @@ export function Contact() {
               </StaggerItem>
 
               <StaggerItem className="space-y-4">
-                <div className="rounded-lg border border-border bg-muted/30 p-5">
-                  <p className="font-mono text-[11px] font-medium tracking-widest text-muted-gh uppercase">
-                    At a glance
-                  </p>
+                <div className="callout-soft p-5">
+                  <p className={fieldLabel}>At a glance</p>
                   <dl className="mt-4 space-y-3.5">
                     {metaRows.map((row) => {
                       const Icon = row.icon;

@@ -1,32 +1,27 @@
 "use client";
 
+import { SectionGlow } from "@/components/background/section-glow";
 import { AnimatedSectionHeading } from "@/components/motion/animated-section-heading";
 import { FadeIn } from "@/components/motion/fade-in";
 import { EducationList } from "@/components/ui/education-list";
+import { EducationSectionIntro } from "@/components/ui/education-section-intro";
 import { educationEntries } from "@/data/portfolio";
-import { containerShell, sectionShell } from "@/lib/layout-classes";
+import { containerShell, sectionShell, subtitleCallout } from "@/lib/layout-classes";
+import { cn } from "@/lib/utils";
 
 export function Education() {
   return (
-    <section id="education" className={sectionShell}>
-      <div className={containerShell}>
+    <section id="education" className={cn("relative overflow-hidden", sectionShell)}>
+      <SectionGlow tint="purple" className="left-[-10%] right-auto top-6 opacity-80" />
+      <div className={cn("relative z-[1]", containerShell)}>
         <AnimatedSectionHeading
           index="01 — Education"
           title="Academic background"
-          subtitle={
-            <p>
-              <span className="font-medium text-fg">98%</span> in high school,
-              engineering at{" "}
-              <span className="font-medium text-fg">Benha University, Shoubra</span>{" "}
-              (5th in department, 89.13% GPA), and a{" "}
-              <span className="font-medium text-fg">fully funded</span> Master&apos;s
-              scholarship at <span className="font-medium text-fg">GUC</span> in 2025.
-            </p>
-          }
-          subtitleClassName="border-l-2 border-primary/35 pl-3 max-sm:text-sm sm:pl-4"
+          subtitle={<EducationSectionIntro />}
+          subtitleClassName={subtitleCallout}
         />
 
-        <FadeIn className="mt-8 md:mt-10">
+        <FadeIn className="mt-6 md:mt-8">
           <EducationList entries={educationEntries} />
         </FadeIn>
       </div>

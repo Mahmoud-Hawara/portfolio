@@ -23,7 +23,7 @@ export function CopyEmailButton({ className }: { className?: string }) {
       type="button"
       onClick={handleCopy}
       className={cn(
-        "card-hover inline-flex items-center gap-1.5 rounded-md border border-border bg-card px-2.5 py-1 text-xs text-muted-gh hover:text-fg",
+        "card-hover inline-flex items-center gap-1.5 rounded-full border border-border/70 bg-card px-2.5 py-1 text-xs text-muted-gh hover:text-fg",
         className
       )}
       aria-label={copied ? "Email copied" : "Copy email address"}

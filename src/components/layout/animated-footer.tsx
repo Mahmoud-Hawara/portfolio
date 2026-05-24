@@ -18,7 +18,7 @@ export function AnimatedFooter() {
   ];
 
   return (
-    <footer className="relative overflow-hidden border-t border-border bg-canvas py-12">
+    <footer className="relative overflow-hidden border-t border-border/60 bg-canvas py-12">
       <WaveBackdrop placement="footer" />
       <div className="relative z-[1] mx-auto max-w-6xl px-4 md:px-6">
         <FadeIn direction="up">
@@ -28,9 +28,12 @@ export function AnimatedFooter() {
               <div>
                 <p className="font-semibold text-fg">{personal.name}</p>
                 <p className="text-sm text-muted-gh">{personal.title}</p>
+                <p className="mt-1 text-xs text-muted-gh/80">
+                  Based in Cairo · {personal.availability}
+                </p>
               </div>
             </div>
-            <Stagger className="flex flex-wrap justify-center gap-5" stagger={0.06}>
+            <Stagger className="flex flex-wrap justify-center gap-2" stagger={0.06}>
               {links.map((link) => (
                 <StaggerItem key={link.label}>
                   <Link
@@ -41,7 +44,7 @@ export function AnimatedFooter() {
                         ? undefined
                         : "noopener noreferrer"
                     }
-                    className="text-sm text-link transition-colors hover:underline"
+                    className="highlight-chip inline-flex px-3.5 py-1.5 text-sm font-medium text-link transition-transform hover:scale-[1.03]"
                   >
                     {link.label}
                   </Link>
@@ -50,7 +53,7 @@ export function AnimatedFooter() {
             </Stagger>
           </div>
           <p className="mt-8 text-center text-xs text-muted-gh">
-            © {year} {personal.name}
+            © {year} {personal.name} · Thanks for stopping by
           </p>
         </FadeIn>
       </div>

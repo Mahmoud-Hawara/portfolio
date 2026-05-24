@@ -19,10 +19,67 @@ export function getPeriodEndYear(period: string): string | null {
   return years?.at(-1) ?? null;
 }
 
+/** Compact range, e.g. "2016 – 2019" or "2025" */
+export function getEducationPeriodRange(period: string): string {
+  const years = period.match(/\b20\d{2}\b/g);
+  if (!years?.length) return "—";
+  if (years.length === 1) return years[0];
+  const start = years[0];
+  const end = years.at(-1)!;
+  return start === end ? start : `${start} – ${end}`;
+}
+
 export function getGradeScore(grade?: string): string | null {
   if (!grade) return null;
   const match = grade.match(/\d{2,3}(?:\.\d+)?%/);
   return match?.[0] ?? null;
+}
+
+export type EducationStatItem = {
+  label: string;
+  value: string;
+};
+
+/** Parsed headline metrics for card headers (GPA, rank, final score). */
+export function getEducationStats(entry: EducationEntry): EducationStatItem[] {
+  const grade = entry.grade;
+  if (!grade) return [];
+
+  const status = getEducationStatus(entry);
+  const level = getEducationLevel(entry);
+
+  if (status === "cancelled" && level === "graduate") {
+    return [{ label: "Scholarship", value: "Fully funded" }];
+  }
+
+  const score = getGradeScore(grade);
+  const rankMatch = grade.match(/(\d+(?:st|nd|rd|th))\s+in/i);
+  const gpaMatch = grade.match(/GPA\s+([\d.]+%?)/i);
+  const items: EducationStatItem[] = [];
+
+  if (score) {
+    items.push({
+      label: getEducationLevel(entry) === "secondary" ? "Final" : "Score",
+      value: score,
+    });
+  }
+
+  if (rankMatch) {
+    items.push({ label: "Rank", value: rankMatch[1] });
+  } else if (gpaMatch && !score) {
+    items.push({ label: "GPA", value: gpaMatch[1].includes("%") ? gpaMatch[1] : `${gpaMatch[1]}%` });
+  } else if (gpaMatch && score && !rankMatch) {
+    const gpaVal = gpaMatch[1].includes("%") ? gpaMatch[1] : `${gpaMatch[1]}%`;
+    if (gpaVal !== score) {
+      items.push({ label: "GPA", value: gpaVal });
+    }
+  }
+
+  if (items.length === 0 && grade.length <= 28) {
+    items.push({ label: "Note", value: grade });
+  }
+
+  return items.slice(0, 2);
 }
 
 /** Newest → oldest (by start year, then end year) */
@@ -110,9 +167,92 @@ export type EducationMilestone = {
   value: string;
   detail?: string;
   school: string;
+  schoolFull: string;
   level: EducationLevel;
   status: EducationStatus;
+  entryId: string;
+  logo?: string;
+  logoClassName?: string;
 };
+
+export type EducationCredential = {
+  id: string;
+  label: string;
+  value: string;
+  detail?: string;
+};
+
+export function getGradePercent(grade?: string): number | null {
+  const score = getGradeScore(grade);
+  if (!score) return null;
+  const n = parseFloat(score.replace("%", ""));
+  return Number.isFinite(n) ? Math.min(100, Math.max(0, n)) : null;
+}
+
+export function getEducationSpotlight(entry: EducationEntry): string | null {
+  return (
+    entry.highlights.find((h) =>
+      /graduation project|online judge|thesis/i.test(h)
+    ) ?? null
+  );
+}
+
+export function getEducationDisplayHighlights(entry: EducationEntry): string[] {
+  const spotlight = getEducationSpotlight(entry);
+  if (!spotlight) return entry.highlights;
+  return entry.highlights.filter((h) => h !== spotlight);
+}
+
+export function getEducationCredentials(
+  entries: EducationEntry[]
+): EducationCredential[] {
+  const sorted = getSortedEducationEntries(entries);
+  const secondary = sorted.find((e) => getEducationLevel(e) === "secondary");
+  const university = sorted.find(
+    (e) =>
+      getEducationLevel(e) === "university" &&
+      getEducationStatus(e) === "completed"
+  );
+  const graduate = sorted.find((e) => getEducationLevel(e) === "graduate");
+
+  const items: EducationCredential[] = [];
+
+  if (secondary) {
+    items.push({
+      id: "secondary",
+      label: "Secondary",
+      value: getGradeScore(secondary.grade) ?? "—",
+      detail: getPeriodEndYear(secondary.period) ?? undefined,
+    });
+  }
+
+  if (university) {
+    const rank = university.grade?.match(/(\d+(?:st|nd|rd|th))/i)?.[1];
+    items.push({
+      id: "university",
+      label: "B.Eng.",
+      value: getGradeScore(university.grade) ?? "—",
+      detail: rank ? `${rank} in department` : undefined,
+    });
+  }
+
+  if (graduate) {
+    items.push({
+      id: "graduate",
+      label: "Master's",
+      value:
+        getEducationStatus(graduate) === "cancelled"
+          ? "Fully funded"
+          : getGradeScore(graduate.grade) ?? "—",
+      detail:
+        getEducationStatus(graduate) === "cancelled"
+          ? "Scholarship · GUC"
+          : getEducationSchoolShort(graduate.school),
+    });
+  }
+
+  return items;
+}
 
 /** Summary strip: oldest → newest (left to right on desktop) */
 export function getEducationSummaryMilestones(
@@ -153,8 +293,12 @@ function buildEducationMilestone(entry: EducationEntry): EducationMilestone {
     value,
     detail,
     school: getEducationSchoolShort(entry.school),
+    schoolFull: entry.school,
     level,
     status,
+    entryId: getEducationEntryId(entry),
+    logo: entry.logo,
+    logoClassName: entry.logoClassName,
   };
 }
 

@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import type { ReactNode } from "react";
+import { SectionKicker } from "@/components/ui/section-kicker";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { EASE_OUT, VIEWPORT } from "@/lib/motion-presets";
 import { cn } from "@/lib/utils";
@@ -23,32 +24,26 @@ export function AnimatedSectionHeading({
 }: AnimatedSectionHeadingProps) {
   const reduced = useReducedMotion();
 
+  const titleClass =
+    "text-xl font-semibold tracking-tight text-fg sm:text-2xl md:text-3xl";
+  const subtitleClass = cn(
+    "mt-3 max-w-2xl text-sm leading-relaxed text-muted-gh sm:mt-4 sm:text-[15px] md:text-base md:leading-7",
+    subtitleClassName
+  );
+
   if (reduced) {
     return (
       <div className={cn("mb-7 sm:mb-10 md:mb-12", className)}>
-        <p className="mb-2 font-mono text-xs tracking-widest text-muted-gh uppercase">
-          {index}
-        </p>
-        <h2 className="text-xl font-semibold tracking-tight text-fg sm:text-2xl md:text-3xl">
-          {title}
-        </h2>
-        {subtitle ? (
-          <div
-            className={cn(
-              "mt-3 max-w-2xl text-sm leading-relaxed text-muted-gh sm:mt-4 sm:text-[15px] md:text-base md:leading-7",
-              subtitleClassName
-            )}
-          >
-            {subtitle}
-          </div>
-        ) : null}
+        <SectionKicker index={index} />
+        <h2 className={titleClass}>{title}</h2>
+        {subtitle ? <div className={subtitleClass}>{subtitle}</div> : null}
       </div>
     );
   }
 
   return (
     <motion.div
-      className={cn("mb-10 md:mb-12", className)}
+      className={cn("mb-7 sm:mb-10 md:mb-12", className)}
       initial="hidden"
       whileInView="visible"
       viewport={VIEWPORT}
@@ -59,19 +54,18 @@ export function AnimatedSectionHeading({
         },
       }}
     >
-      <motion.p
-        className="mb-2 font-mono text-xs tracking-widest text-muted-gh uppercase"
+      <motion.div
         variants={{
-          hidden: { opacity: 0, x: -12 },
+          hidden: { opacity: 0, x: -8 },
           visible: { opacity: 1, x: 0, transition: { duration: 0.4, ease: EASE_OUT } },
         }}
       >
-        {index}
-      </motion.p>
+        <SectionKicker index={index} />
+      </motion.div>
       <motion.h2
-        className="text-xl font-semibold tracking-tight text-fg sm:text-2xl md:text-3xl"
+        className={titleClass}
         variants={{
-          hidden: { opacity: 0, y: 16 },
+          hidden: { opacity: 0, y: 12 },
           visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: EASE_OUT } },
         }}
       >
@@ -79,12 +73,9 @@ export function AnimatedSectionHeading({
       </motion.h2>
       {subtitle ? (
         <motion.div
-          className={cn(
-            "mt-3 max-w-2xl text-sm leading-relaxed text-muted-gh sm:mt-4 sm:text-[15px] md:text-base md:leading-7",
-            subtitleClassName
-          )}
+          className={subtitleClass}
           variants={{
-            hidden: { opacity: 0, y: 12 },
+            hidden: { opacity: 0, y: 10 },
             visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: EASE_OUT } },
           }}
         >

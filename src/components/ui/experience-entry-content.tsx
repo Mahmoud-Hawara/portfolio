@@ -168,14 +168,10 @@ export function ExperienceEntryBullets({
       )}
     >
       {isFeatured ? (
-        <p className="font-mono text-[10px] font-medium uppercase tracking-wider text-muted-gh">
-          What I&apos;m doing
-        </p>
+        <p className="label-soft">What I&apos;m doing</p>
       ) : null}
       {isTimeline ? (
-        <p className="font-mono text-[10px] font-medium uppercase tracking-wider text-muted-gh">
-          Key outcomes
-        </p>
+        <p className="label-soft">Highlights</p>
       ) : null}
       {isFeatured ? (
         <ul className="space-y-2.5">
@@ -240,8 +236,8 @@ export function ExperienceEntrySkills({
         className
       )}
     >
-      <p className="mb-2 font-mono text-[10px] font-medium uppercase tracking-wider text-muted-gh">
-        {variant === "featured" ? "Technologies" : "Stack"}
+      <p className="label-soft mb-2">
+        {variant === "featured" ? "Technologies I use" : "Stack"}
       </p>
       <ul
         className={cn(

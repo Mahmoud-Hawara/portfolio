@@ -31,7 +31,7 @@ export function HeroIdentity({ className }: HeroIdentityProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.4 }}
           >
-            Hi, I&apos;m
+            Hey, I&apos;m
           </motion.p>
 
           <motion.div
@@ -42,17 +42,7 @@ export function HeroIdentity({ className }: HeroIdentityProps) {
             <h1 className="flex flex-wrap items-baseline gap-x-1.5 text-[1.65rem] font-bold leading-[1.05] tracking-tight max-[400px]:text-[1.5rem] sm:gap-x-2 sm:text-4xl sm:leading-none lg:text-5xl">
               <span className="text-fg">{firstName}</span>
               {lastName ? (
-                <motion.span
-                  className="gradient-text inline-block"
-                  animate={{ opacity: [0.85, 1, 0.85] }}
-                  transition={{
-                    duration: 4,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                >
-                  {lastName}
-                </motion.span>
+                <span className="text-shimmer inline-block">{lastName}</span>
               ) : null}
             </h1>
           </motion.div>
@@ -64,7 +54,7 @@ export function HeroIdentity({ className }: HeroIdentityProps) {
             transition={{ delay: 0.22, duration: 0.4 }}
           >
             <motion.span
-              className="inline-flex max-w-full items-center gap-1.5 rounded-full bg-muted px-2.5 py-1 text-xs font-medium text-fg sm:gap-2 sm:px-3 sm:text-sm"
+              className="highlight-chip inline-flex max-w-full items-center gap-1.5 px-2.5 py-1 text-xs font-medium text-fg sm:gap-2 sm:px-3 sm:text-sm"
               whileHover={{ scale: 1.03 }}
               transition={{ type: "spring", stiffness: 400, damping: 20 }}
             >
@@ -91,7 +81,7 @@ export function HeroIdentity({ className }: HeroIdentityProps) {
             {heroHighlights.map((tag, i) => (
               <motion.span
                 key={tag}
-                className="rounded-full bg-muted px-2 py-0.5 text-[10px] font-medium text-muted-gh sm:px-2.5 sm:text-[11px] lg:text-xs"
+                className="highlight-chip px-2 py-0.5 text-[10px] font-medium text-muted-gh sm:px-2.5 sm:text-[11px] lg:text-xs"
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{

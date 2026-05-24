@@ -7,34 +7,42 @@ import {
 } from "@/components/ui/experience-entry-content";
 import type { ExperienceEntry } from "@/data/portfolio";
 import { getCompanyBrand } from "@/lib/company-brands";
+import { GradientFrame } from "@/components/ui/gradient-frame";
 import { cn } from "@/lib/utils";
 
 type ExperienceCardProps = {
   job: ExperienceEntry;
   /** When true, cards share one outer frame on large screens (no double borders). */
   grouped?: boolean;
+  /** Animated gradient border — current roles. */
+  signature?: boolean;
   className?: string;
 };
 
 export function ExperienceCard({
   job,
   grouped = false,
+  signature = false,
   className,
 }: ExperienceCardProps) {
   const brand = getCompanyBrand(job.company);
   const hasBrandBg = Boolean(brand.cardBg);
 
-  return (
+  const card = (
     <motion.article
       className={cn(
         "card-hover group/card relative flex h-full min-h-0 flex-col overflow-hidden",
         grouped
           ? [
-              "rounded-lg border border-border/80 shadow-sm",
+              "rounded-2xl border border-border/70 shadow-sm",
               "lg:rounded-none lg:border-0 lg:shadow-none",
               "hover:shadow-sm lg:hover:shadow-none",
             ]
-          : ["rounded-lg border border-border/80 shadow-sm", brand.accentBorder],
+          : [
+              "rounded-2xl border border-border/70 shadow-sm",
+              !signature && brand.accentBorder,
+              signature && "border-0 shadow-none",
+            ],
         brand.cardBg ?? "bg-surface",
         !grouped && brand.accentHover,
         grouped &&
@@ -86,4 +94,14 @@ export function ExperienceCard({
       </div>
     </motion.article>
   );
+
+  if (signature && !grouped) {
+    return (
+      <GradientFrame className={cn("h-full", className)} innerClassName="h-full">
+        {card}
+      </GradientFrame>
+    );
+  }
+
+  return card;
 }

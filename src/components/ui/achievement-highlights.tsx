@@ -35,7 +35,7 @@ export function AchievementHighlights({
             key={item.id}
             role="listitem"
             className={cn(
-              "relative flex flex-col items-center justify-center px-2 py-4 text-center transition-colors sm:px-3 sm:py-6",
+              "relative flex flex-col items-center justify-center px-2 py-4 text-center transition-all duration-200 hover:bg-muted/25 sm:px-3 sm:py-6",
               achievementAccentHover[item.accent]
             )}
           >

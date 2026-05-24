@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
+import { GradientFrame } from "@/components/ui/gradient-frame";
 import { cn } from "@/lib/utils";
 
 export type ProjectCardProps = {
@@ -29,11 +30,11 @@ export function ProjectCard({
   featured = false,
   className,
 }: ProjectCardProps) {
-  return (
+  const article = (
     <motion.article
       className={cn(
-        "card-hover group flex h-full flex-col rounded-md border border-border bg-surface p-4 sm:p-5 md:p-6",
-        featured && "md:col-span-2",
+        "card-hover group flex h-full flex-col rounded-2xl border border-border/70 bg-surface p-4 sm:p-5 md:p-6",
+        featured && "border-0 shadow-none",
         className
       )}
       whileHover={{ y: -4, transition: { duration: 0.2 } }}
@@ -90,4 +91,14 @@ export function ProjectCard({
       </div>
     </motion.article>
   );
+
+  if (featured) {
+    return (
+      <GradientFrame variant="vivid" className={cn("h-full md:col-span-2", className)}>
+        {article}
+      </GradientFrame>
+    );
+  }
+
+  return article;
 }

@@ -6,7 +6,7 @@ export function WaveDivider({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "pointer-events-none relative -my-px hidden h-10 w-full overflow-hidden opacity-[0.14] dark:opacity-[0.22] md:block",
+        "pointer-events-none relative -my-px hidden h-12 w-full overflow-hidden opacity-[0.22] dark:opacity-[0.28] md:block",
         className
       )}
       aria-hidden

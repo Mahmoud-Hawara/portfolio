@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { MapPin } from "lucide-react";
+import { FloatingSparks } from "@/components/background/floating-sparks";
 import { HeroWave } from "@/components/background/hero-wave";
 import { FadeIn } from "@/components/motion/fade-in";
 import { CopyEmailButton } from "@/components/ui/copy-email-button";
@@ -9,6 +10,7 @@ import { HeroActions } from "@/components/ui/hero-actions";
 import { HeroIdentity } from "@/components/ui/hero-identity";
 import { HeroStats } from "@/components/ui/hero-stats";
 import { ProfilePanel } from "@/components/ui/profile-panel";
+import { ScrollHint } from "@/components/ui/scroll-hint";
 import { personal } from "@/data/portfolio";
 
 const roles = [
@@ -25,10 +27,11 @@ export function Hero() {
       className="relative overflow-x-hidden pt-[4.75rem] pb-10 sm:pt-28 sm:pb-14 md:pt-36 md:pb-16 lg:pt-40 lg:pb-20"
     >
       <div
-        className="pointer-events-none absolute inset-0 grid-pattern opacity-30"
+        className="pointer-events-none absolute inset-0 grid-pattern opacity-[0.14]"
         aria-hidden
       />
       <div className="pointer-events-none absolute inset-0 hero-glow" aria-hidden />
+      <FloatingSparks />
       <HeroWave />
 
       <div className="relative z-[1] mx-auto w-full max-w-7xl px-3.5 sm:px-6 md:px-10 lg:max-w-[90rem] lg:px-14 xl:px-20">
@@ -58,9 +61,7 @@ export function Hero() {
             </FadeIn>
 
             <FadeIn delay={0.2}>
-              <div className="card-hover flex h-9 w-full min-w-0 max-w-xl items-center overflow-hidden rounded-md border border-border bg-surface/80 px-2.5 font-mono text-[11px] text-link sm:h-8 sm:px-3 sm:text-sm">
-                <TypingRoles roles={roles} />
-              </div>
+              <TypingRoles roles={roles} />
             </FadeIn>
 
             <FadeIn delay={0.25}>
@@ -73,9 +74,11 @@ export function Hero() {
           </div>
 
           <FadeIn delay={0.12} className="lg:order-2">
-            <ProfilePanel className="w-full lg:max-w-none" />
+            <ProfilePanel className="w-full lg:max-w-none" featured />
           </FadeIn>
         </div>
+
+        <ScrollHint />
       </div>
     </section>
   );
@@ -111,10 +114,12 @@ function TypingRoles({ roles }: { roles: string[] }) {
   }, [text, deleting, index, roles]);
 
   return (
-    <span aria-live="polite">
-      <span className="text-muted-gh">$ focus -- </span>
-      {text}
-      <span className="ml-0.5 inline-block h-[1.1em] w-0.5 animate-pulse bg-primary" />
-    </span>
+    <div className="flex h-9 w-full min-w-0 max-w-xl items-center overflow-hidden rounded-2xl bg-muted/40 px-3 text-sm ring-1 ring-border/50">
+      <span className="w-full min-w-0 truncate" aria-live="polite">
+        <span className="text-muted-gh">Right now → </span>
+        <span className="font-medium text-gh-link">{text}</span>
+        <span className="ml-0.5 inline-block h-[1em] w-0.5 animate-pulse bg-primary/70" />
+      </span>
+    </div>
   );
 }
