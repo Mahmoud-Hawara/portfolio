@@ -142,17 +142,18 @@ export type VolunteeringEntry = {
 
 export const volunteering: VolunteeringEntry[] = [
   {
-    role: "Head",
+    role: "Head & Mentor",
     organization: "ICPC Community — Benha University",
-    period: "Sep 2022 – Sep 2023",
+    period: "Head ’22–’23 · Mentor ’22–’24",
     location: "Benha, Egypt",
     category: "Community leadership",
     bullets: [
       "Led preparation for **500+** students in algorithms, data structures, and contest strategy.",
       "Organized structured training sessions, weekly contests, and mentorship for regional qualifiers.",
       "Built the community pipeline that supported Benha teams in **ICPC** and **ECPC** competition seasons.",
+      "Coached contest teams on graphs, DP, and greedy patterns ahead of regional **ICPC** qualifiers.",
     ],
-    tags: ["ICPC", "Training", "Leadership"],
+    tags: ["ICPC", "Mentorship", "Leadership"],
   },
   {
     role: "Organizer",
@@ -167,16 +168,26 @@ export const volunteering: VolunteeringEntry[] = [
     tags: ["Community", "Problem Setting"],
   },
   {
-    role: "Mentor",
-    organization: "University ICPC Training Program",
-    period: "2022 – 2024",
+    role: "Technical Support",
+    organization: "IEEE Robotics",
+    period: "",
     location: "Benha, Egypt",
-    category: "Peer mentorship",
+    category: "Robotics support",
     bullets: [
-      "Coached contest teams on graphs, DP, and greedy patterns ahead of regional **ICPC** qualifiers.",
-      "Supported lab sessions and practice sets for the university competitive programming track.",
+      "Provided **Technical Support** for **IEEE Robotics** activities.",
     ],
-    tags: ["ICPC", "Mentorship"],
+    tags: ["IEEE", "Robotics", "Technical Support"],
+  },
+  {
+    role: "Head",
+    organization: "Scientific Committee",
+    period: "",
+    location: "Benha, Egypt",
+    category: "Scientific leadership",
+    bullets: [
+      "Served as **Head of the Scientific Committee**.",
+    ],
+    tags: ["Scientific Committee", "Leadership"],
   },
 ];
 
@@ -372,8 +383,8 @@ export const experience: ExperienceEntry[] = [
   {
     role: "Problem-Solving Instructor",
     company: "Coach Academy",
-    logo: "/logos/coach-academy.png",
-    logoClassName: "bg-white dark:bg-black border-border/80",
+    logo: "/logos/coach-academy-clean.png",
+    logoClassName: "bg-white border-border/80",
     workMode: "Remote",
     type: "Part-time",
     period: "Jul 2023 – Aug 2024",
@@ -406,12 +417,19 @@ export const experience: ExperienceEntry[] = [
 export const projects = [
   {
     title: "Online Judge Platform",
+    category: "Developer platform · Graduation project",
+    visual: "judge" as const,
     description:
       "MERN platform for ICPC/IOI-style team training with dynamic rankings, real-time collaboration, and personalized recommendations.",
     impact: "300+ active users",
     year: "2024",
     topics: ["MERN", "MongoDB", "Polygon", "ICPC"],
     href: "https://github.com/gradProject",
+    proofs: [
+      { value: "300+", label: "active users" },
+      { value: "40%", label: "faster database" },
+      { value: "30%", label: "better suggestions" },
+    ],
     highlights: [
       "Led architecture; improved DB performance by 40%; integrated Polygon for auto test cases.",
       "Built similarity-based recommendation engine improving problem suggestions by 30%.",
@@ -420,12 +438,19 @@ export const projects = [
   },
   {
     title: "Automated University Scheduler",
+    category: "Operations tool · Adopted by university",
+    visual: "scheduler" as const,
     description:
       "Scheduling system adopted by the university to assign study groups and observers based on hall capacity and group size.",
     impact: "2 weeks → 2 minutes",
     year: "2023",
     topics: ["Node.js", "Express", "React"],
     href: "#",
+    proofs: [
+      { value: "2 weeks", label: "manual baseline" },
+      { value: "< 2 min", label: "automated result" },
+      { value: "LIVE", label: "university adopted" },
+    ],
     highlights: [
       "Reduced manual scheduling from 2 weeks to under 2 minutes in worst-case scenarios.",
     ],
@@ -515,18 +540,7 @@ export const achievements: Achievement[] = [
     ],
     accent: "green",
     icon: "trophy",
-    photos: [
-      {
-        src: "/photos/achievements/icpc-1.jpg",
-        alt: "ICPC regional finals — team at contest venue",
-        caption: "ICPC Regional Finals · 2024 · 30th place",
-      },
-      {
-        src: "/photos/achievements/icpc-2.jpg",
-        alt: "ICPC regional finals — awards stage",
-        caption: "ICPC Regional Finals · 2023 · 28th place",
-      },
-    ],
+    photos: [],
   },
   {
     title: "ECPC Bronze Medalist",
@@ -541,18 +555,7 @@ export const achievements: Achievement[] = [
     ],
     accent: "amber",
     icon: "medal",
-    photos: [
-      {
-        src: "/photos/achievements/ecpc-1.jpg",
-        alt: "ECPC bronze medal — Egyptian Collegiate Programming Contest 2022",
-        caption: "ECPC Bronze · 12th place · 2022",
-      },
-      {
-        src: "/photos/achievements/ecpc-2.jpg",
-        alt: "ECPC bronze medal — Egyptian Collegiate Programming Contest 2024",
-        caption: "ECPC Bronze · 11th place · 2024",
-      },
-    ],
+    photos: [],
   },
   {
     title: "Global Problem Solving",
@@ -567,18 +570,7 @@ export const achievements: Achievement[] = [
     ],
     accent: "blue",
     icon: "code",
-    photos: [
-      {
-        src: "/photos/achievements/codeforces-1.jpg",
-        alt: "On-site competitive programming contest",
-        caption: "Codeforces · Expert · 1863 peak",
-      },
-      {
-        src: "/photos/achievements/codeforces-2.jpg",
-        alt: "Focused problem-solving and training session",
-        caption: "Training & practice",
-      },
-    ],
+    photos: [],
   },
   {
     title: "Excellent with Honors",
@@ -595,12 +587,12 @@ export const achievements: Achievement[] = [
     icon: "graduation",
     photos: [
       {
-        src: "/photos/achievements/graduation-1.jpg",
+        src: "/photos/achievements/graduation-1.png",
         alt: "Graduation ceremony — Excellent with Honors",
         caption: "Excellent with Honors · Class of 2024",
       },
       {
-        src: "/photos/achievements/graduation-2.jpg",
+        src: "/photos/achievements/graduation-2.png",
         alt: "Graduation day with classmates at Benha University",
         caption: "Benha University · Computer Engineering",
       },
