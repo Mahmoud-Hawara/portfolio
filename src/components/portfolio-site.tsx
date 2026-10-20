@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 import { DeveloperHero, OpeningSequence } from "@/components/developer-hero";
-import { ArrowUpRight, Braces, Check, Cloud, Code2, Copy, GraduationCap, Medal, Menu, Moon, Plus, Sparkles, Sun, Trophy, Users, X } from "lucide-react";
+import { ArrowUpRight, Braces, Check, Cloud, Search, Upload, Layers, Code2, Copy, GraduationCap, Medal, Menu, Moon, Plus, Sparkles, Sun, Trophy, Users, X } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
-import { type CSSProperties, type ReactNode, useEffect, useRef, useState } from "react";
+import { type CSSProperties, type ReactNode, Fragment, useId, useLayoutEffect, useEffect, useRef, useState } from "react";
 import { useTheme } from "next-themes";
 import { achievements, educationEntries, experience, personal, projects, techStack, volunteering, type ExperienceEntry } from "@/data/portfolio";
 import { FormattedText } from "@/components/ui/formatted-text";
@@ -29,7 +29,7 @@ function Reveal({ children, className = "", delay = 0, direction = "up" }: { chi
 }
 
 function OrganizationMark({ name, src, className = "" }: { name: string; src?: string; className?: string }) {
-  return <span className={`organization-mark ${name === "noon" ? "mark-noon" : ""} ${name === "Coach Academy" ? "mark-coach" : ""} ${name === "Benha University" ? "mark-benha" : ""} ${className}`}>
+  return <span className={`organization-mark ${name === "noon" ? "mark-noon" : name === "micro1" ? "mark-micro1" : ""} ${name === "Coach Academy" ? "mark-coach" : ""} ${name === "Benha University" ? "mark-benha" : ""} ${className}`}>
     {src ? <Image src={src} alt={`${name} logo`} width={44} height={44} /> : <GraduationCap size={22} aria-hidden="true" />}
   </span>;
 }
@@ -56,6 +56,7 @@ const companyLinkedIn: Record<string, string> = {
   "German University in Cairo": "https://www.linkedin.com/school/german-university-in-cairo/",
   Microsoft: "https://www.linkedin.com/company/microsoft/",
   Mercor: "https://www.linkedin.com/company/mercor-ai/",
+  micro1: "https://www.linkedin.com/company/micro1/",
   "Benha National University": "https://www.linkedin.com/school/benhanationaluniversity/",
   "Coach Academy": "https://www.linkedin.com/company/coachacademyeg/",
 };
@@ -68,8 +69,31 @@ function Tags({ items }: { items: string[] }) {
   return <ul className="tags" aria-label="Technologies">{items.map(item => <li key={item}><TechnologyIcon name={item} />{item}</li>)}</ul>;
 }
 
+function SmoothDisclosure({ className, summaryClassName = "", summary, children }: { className: string; summaryClassName?: string; summary: ReactNode; children: ReactNode }) {
+  const [expanded,setExpanded] = useState(false);
+  const [visible,setVisible] = useState(false);
+  const [contentHeight,setContentHeight] = useState(0);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const reduced = useReducedMotion();
+  const id = useId();
+  useLayoutEffect(() => {
+    if (!visible || !contentRef.current) return;
+    const content = contentRef.current;
+    const measure = () => setContentHeight(Math.ceil(content.getBoundingClientRect().height));
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(content);
+    return () => observer.disconnect();
+  }, [visible]);
+  const duration = reduced ? 0 : Math.min(.44,Math.max(.22,contentHeight / 2000));
+  return <details className={`${className} smooth-disclosure`} open={visible} data-expanded={expanded}>
+    <summary className={summaryClassName} id={`${id}-trigger`} aria-expanded={expanded} aria-controls={`${id}-body`} onClick={event => { event.preventDefault(); setVisible(true); setExpanded(value => !value); }}>{summary}</summary>
+    <motion.div id={`${id}-body`} role="region" aria-labelledby={`${id}-trigger`} aria-hidden={!expanded} inert={!expanded} initial={false} animate={{height:expanded ? contentHeight : 0}} transition={{duration,ease:[.22,.61,.36,1]}} onAnimationComplete={() => { if (!expanded) setVisible(false); }} className="smooth-disclosure-clip"><div className="disclosure-measure" ref={contentRef}>{children}</div></motion.div>
+  </details>;
+}
+
 function DetailToggle() {
-  return <span className="detail-toggle" aria-hidden="true"><Plus size={16} /></span>;
+  return <span className="detail-toggle" aria-hidden="true"><Plus size={12} strokeWidth={1.5} /></span>;
 }
 
 function ExternalLink({ href, children, className = "" }: { href: string; children: React.ReactNode; className?: string }) {
@@ -127,7 +151,7 @@ function ProjectCase({ project, index }: { project: ProjectEntry; index: number 
     </div>
     <div className="project-proof-strip" aria-label="Project results">{project.proofs.map((proof, proofIndex) => <motion.div key={proof.label} initial={false} whileInView={reduced ? undefined : { y: [18, 0], opacity: [0, 1] }} viewport={{ once: true, amount: 0.6 }} transition={{ duration: reduced ? 0 : 0.55, delay: reduced ? 0 : proofIndex * 0.09, ease: EASE }}><span>0{proofIndex + 1}</span><strong>{proof.value}</strong><small>{proof.label}</small></motion.div>)}</div>
     <div className="project-case-footer">
-      <details className="project-notes" name="project-notes"><summary><span className="project-notes-heading"><small>ENGINEERING NOTES</small><strong>{notesTitle}</strong></span><span className="project-notes-command"><small>{String(project.highlights.length).padStart(2, "0")} ENTRIES</small><span className="project-notes-toggle"><Plus size={17} /></span></span></summary><div className="project-notes-panel"><ol>{project.highlights.map((line, lineIndex) => <li key={line}><span>{String(lineIndex + 1).padStart(2, "0")}</span><p>{line}</p></li>)}</ol></div></details>
+      <SmoothDisclosure className="project-notes" summary={<><span className="project-notes-heading"><small>ENGINEERING NOTES</small><strong>{notesTitle}</strong></span><span className="project-notes-command"><small>{String(project.highlights.length).padStart(2, "0")} ENTRIES</small><span className="project-notes-toggle"><Plus size={12} strokeWidth={1.5} /></span></span></>}><div className="project-notes-panel"><ol>{project.highlights.map((line, lineIndex) => <li key={line}><span>{String(lineIndex + 1).padStart(2, "0")}</span><p>{line}</p></li>)}</ol></div></SmoothDisclosure>
       {project.href !== "#" ? <ExternalLink href={project.href} className="project-repository"><span><small>PUBLIC SOURCE</small><strong>GitHub repository</strong></span></ExternalLink> : <span className="project-private"><span className="project-private-dot" /><span><small>RELEASE STATUS</small><strong>Internal deployment</strong></span></span>}
     </div>
   </motion.article>;
@@ -186,47 +210,57 @@ function GitHubActivity({ username, profile }: { username: string; profile: stri
 
 const careerNarrative: Record<string, { lead: string; metric: string; metricLabel: string; signal: string; chapter: string; chapterText: string; drawerTitle: string; tags: string[] }> = {
   noon: {
-    lead: "Building the production systems behind large-scale commerce, from catalog and search to the tools sellers use every day.",
-    metric: "LIVE",
-    metricLabel: "systems in production",
-    signal: "Catalog → Search → Seller Lab",
-    chapter: "Commerce at scale.",
-    chapterText: "Shipping catalog, search, and seller tools used in real buying journeys.",
-    drawerTitle: "What I'm shipping",
-    tags: ["FastAPI", "GCP", "Elasticsearch", "Temporal"],
+    lead: "I build catalog and discovery features for the Dubai Mall shopping app. I joined before its internal launch and worked alongside my mentor as a two-person catalog team, handling much of the work from seller tooling to the customer-facing app.",
+    metric: "~2M",
+    metricLabel: "SKUs · 100K products",
+    signal: "Dubai Mall app · Pre-launch → Production",
+    chapter: "Building Dubai Mall’s catalog.",
+    chapterText: "Part of a two-person catalog team from before internal launch, building features and improving search across approximately two million SKUs.",
+    drawerTitle: "Inside Dubai Mall",
+    tags: ["Dubai Mall app", "Brand search", "Catalog", "Solr"],
   },
   "German University in Cairo": {
-    lead: "Turning advanced databases and data structures into clear, practical learning for the next generation of engineers.",
+    lead: "Started at GUC as a Teaching Assistant and received a fully funded Master’s scholarship. Later chose hands-on software engineering and a return to industry, cancelling the scholarship while continuing to teach part-time until July 2026.",
     metric: "100+",
     metricLabel: "students per course",
     signal: "Teach → Test → Mentor",
     chapter: "Make hard ideas click.",
-    chapterText: "Turning databases and data structures into practical engineering instincts.",
-    drawerTitle: "What I'm teaching",
+    chapterText: "Teaching and a fully funded Master’s scholarship, followed by a decision to prioritize industry. Continued teaching part-time until 10 July 2026.",
+    drawerTitle: "Teaching, scholarship & the move to industry",
     tags: ["Advanced Database", "Data Structures", "Teaching"],
   },
   Microsoft: {
-    lead: "Engineering automation and observability for Microsoft Clarity's backend performance and testing infrastructure.",
+    lead: "Built automation and observability for Microsoft Clarity’s backend testing, from scheduled benchmarks to dashboards and parallel test capacity.",
     metric: "10×",
     metricLabel: "parallel test capacity",
     signal: "Automate → Observe → Scale",
     chapter: "Automate the bottleneck.",
-    chapterText: "Making Clarity's backend testing faster, observable, and repeatable.",
+    chapterText: "Automated benchmarks, monitored system performance, and removed bottlenecks in parallel testing.",
     drawerTitle: "What I automated",
     tags: ["Python", "Azure Functions", "KQL", "Grafana"],
   },
+  micro1: {
+    lead: "Created around 150 very challenging algorithmic problems for AI training, alongside reviewing problem submissions.",
+    metric: "~150",
+    metricLabel: "hard problems authored",
+    signal: "Design → Validate → Review",
+    chapter: "Raise the difficulty.",
+    chapterText: "AI training and review focused on very hard algorithmic problems.",
+    drawerTitle: "AI training & review",
+    tags: ["AI Training", "Algorithms", "Problem Design", "Review"],
+  },
   Mercor: {
-    lead: "Designing rigorous algorithmic problems and edge-case test data used to challenge AI reasoning systems.",
+    lead: "Authored competitive programming problems, reference solutions, and edge-case tests to challenge AI problem solving.",
     metric: "75+",
     metricLabel: "problems authored",
     signal: "Design → Validate → Calibrate",
     chapter: "Design for edge cases.",
-    chapterText: "Building problems that expose weak reasoning and reward precision.",
+    chapterText: "Designed original problems and test data, then reviewed their quality and difficulty with the engineering team.",
     drawerTitle: "What I designed",
     tags: ["C++", "Algorithms", "Problem Setting"],
   },
   "Benha National University": {
-    lead: "Teaching core computer science and coaching students through algorithms, OOP, databases, and ICPC preparation.",
+    lead: "Taught object-oriented programming, algorithms, and MySQL while supporting coursework and ICPC team preparation.",
     metric: "200+",
     metricLabel: "students taught",
     signal: "Explain → Practice → Compete",
@@ -236,7 +270,7 @@ const careerNarrative: Record<string, { lead: string; metric: string; metricLabe
     tags: ["Algorithms", "OOP", "MySQL", "ICPC"],
   },
   "Coach Academy": {
-    lead: "Training students and graduates to solve hard problems with structure, speed, and confidence.",
+    lead: "Prepared undergraduates for ICPC and graduates for technical interviews through structured practice and individual feedback.",
     metric: "600+",
     metricLabel: "learners trained",
     signal: "Learn → Solve → Review",
@@ -246,6 +280,250 @@ const careerNarrative: Record<string, { lead: string; metric: string; metricLabe
     tags: ["C++", "ICPC", "Training", "Interviews"],
   },
 };
+
+const noonTopics = [
+  {
+    "label": "Dubai Mall app",
+    "caption": "Before launch → production",
+    "mark": "01",
+    "tone": "gold",
+    "kind": "overview",
+    "title": "My work on the Dubai Mall app.",
+    "intro": "I work mainly on the Dubai Mall shopping app, building the catalog services behind its product browsing and search.",
+    "sections": [
+      [
+        "Involved from before launch",
+        "I joined before the internal launch and worked on the catalog as the app took shape. My mentor and I were the two people on the catalog team, handling much of the work from seller tools to the customer-facing app."
+      ],
+      [
+        "What I build and improve",
+        "I built brand search, collections, video uploads, and size ordering. Alongside these features, I keep working on search quality and latency. Size normalization is my current focus."
+      ]
+    ]
+  },
+  {
+    "label": "Catalog pipeline",
+    "caption": "Seller Lab → publication",
+    "mark": "02",
+    "tone": "gold",
+    "kind": "seller",
+    "title": "How products reach the app.",
+    "intro": "My work spans the path from a seller uploading a product to that product becoming available in the app.",
+    "sections": [
+      [
+        "Seller tools",
+        "In Seller Lab, partners import products and catalog data, export their existing catalog, and manage product records. I also worked on stores and brands: a partner can have several stores under a project, with multiple brands in each store."
+      ],
+      [
+        "Checks and publication",
+        "Submitted product data is stored centrally across noon marketplaces. It passes quality, content, and live checks before entering our catalog. We then re-index the published data in Solr so customers can find it through search. I worked across this pipeline."
+      ]
+    ]
+  },
+  {
+    "label": "Search & discovery",
+    "caption": "Suggestions, filters & latency",
+    "mark": "03",
+    "tone": "gold",
+    "kind": "search",
+    "title": "Help customers find products faster.",
+    "intro": "I work on Solr search, improving suggestions, autocomplete, and search latency.",
+    "sections": [
+      [
+        "Organizing search with filter keys",
+        "I worked on filter keys that group SKUs. These groups let us narrow search queries and organize the filters customers use to browse the catalog."
+      ],
+      [
+        "Catalog services in the app",
+        "My work also covers catalog URIs and the data behind PDP and BLP pages. I had a small contribution to vector search and limited exposure to Elasticsearch, which is used for search in Seller Lab."
+      ]
+    ]
+  },
+  {
+    "label": "Brand search",
+    "caption": "Built from scratch",
+    "mark": "↳",
+    "tone": "teal",
+    "kind": "brand",
+    "title": "Search by brand, alongside stores and products.",
+    "intro": "I built brand search from scratch, adding a search option that the app did not previously have.",
+    "sections": [
+      [
+        "The feature",
+        "The app already supported store and product search. I added the ability to search for brands, giving customers another way to find what they are looking for."
+      ],
+      [
+        "The implementation",
+        "I built it using the existing Solr store core. We extended the search infrastructure already in place instead of creating a separate core for brands."
+      ]
+    ]
+  },
+  {
+    "label": "Collections",
+    "caption": "Built end to end",
+    "mark": "↳",
+    "tone": "blue",
+    "kind": "collections",
+    "title": "Build a collection. Show it in the store.",
+    "intro": "I built collections end to end, so partners can group selected products and display them together in their app storefront.",
+    "sections": [
+      [
+        "From SKUs to a storefront collection",
+        "A partner creates a collection, adds the SKUs it should contain, and uses the CMS to place it in their store. For example, a summer collection brings a chosen set of products together for customers to browse. My work covered creation through CMS integration."
+      ],
+      [
+        "My end-to-end contribution",
+        "I built the collection feature from creation and SKU selection through CMS integration, so partners can display their chosen products together in the app storefront."
+      ]
+    ]
+  },
+  {
+    "label": "Video uploads",
+    "caption": "Upload & media processing",
+    "mark": "↳",
+    "tone": "teal",
+    "kind": "video",
+    "title": "Upload product videos individually or in bulk.",
+    "intro": "I built the video upload flow through PDB and the importers, including automatic compression as part of processing.",
+    "sections": [
+      [
+        "What partners can upload",
+        "The importer accepts up to 20 videos in one submission, with each source file up to 100 MB. PDB provides the other upload route."
+      ],
+      [
+        "Preparing videos for playback",
+        "The processing flow automatically compresses videos to a maximum of 20 MB each. The app then fetches the smaller processed file, reducing the amount of data transferred for playback."
+      ]
+    ]
+  },
+  {
+    "label": "Product sizing",
+    "caption": "Controlled AI · Ops review",
+    "mark": "↳",
+    "tone": "blue",
+    "kind": "sizing",
+    "title": "AI size ordering, with Ops in control.",
+    "intro": "I built the size-ordering workflow end to end: controlled AI suggestions, a review dashboard for Ops, and updates that flow back into the app. Size normalization remains a separate, ongoing feature.",
+    "sections": [
+      [
+        "The problem: no shared size guide",
+        "Each brand or store supplied sizes in its own format and without a reliable order. With no size guide to follow, we needed a way to identify the sizing system and arrange each size combination correctly."
+      ],
+      [
+        "Controlled suggestions, with reasons when they fail",
+        "I defined the supported sizing systems and built the AI flow to identify which system a new size belongs to, then order sizes within that system. When it finds a problem, it reports a failure with a reason so Ops can investigate instead of accepting an unclear result."
+      ],
+      [
+        "An Ops dashboard for review and editing",
+        "I built a dashboard showing size combinations, their orderings, and statistics across the sizing systems in our data. Ops can request AI suggestions, review the results and failure reasons, and edit the ordering directly."
+      ],
+      [
+        "Process only what is missing",
+        "Previously processed combinations reuse their saved results. I also added a way to fetch only new products whose size combinations are missing from size ordering, and run AI on those. This lets us catch up after the feature has been disabled and re-enabled without paying to process the whole catalog again."
+      ],
+      [
+        "From an Ops edit to the app",
+        "When Ops updates a combination’s ordering, the related products are re-indexed so the corrected order is reflected in the app."
+      ]
+    ]
+  },
+] as const;
+
+function NoonWorkflows() {
+  const [selected, setSelected] = useState(0);
+  const reduced = useReducedMotion();
+  const topic = noonTopics[selected];
+  const selectTopic = (index: number, focus = false) => {
+    setSelected(index);
+    if (focus) document.getElementById(`noon-topic-${index}`)?.focus();
+  };
+  return <SmoothDisclosure className="noon-atlas" summaryClassName="noon-atlas-cover" summary={<>
+      <span className="noon-cover-emblem" aria-hidden="true"><Layers size={19} /><i /><i /></span>
+      <span className="noon-cover-text"><small>DUBAI MALL / CATALOG ENGINEERING</small><strong>From pre-launch to production.</strong><span>The catalog, search & features I helped build.</span></span>
+      <span className="noon-cover-command"><span className="noon-open-label">EXPLORE<small>{String(noonTopics.length).padStart(2,"0")} PARTS</small></span><span className="noon-close-label">CLOSE<small>FIELD NOTES</small></span><DetailToggle /></span>
+      <span className="noon-cover-map" aria-hidden="true"><span><i>Dubai Mall app</i><b>→</b><i>Catalog & discovery</i></span><span className="noon-cover-features"><i><Search size={9} />Brand search</i><i><Layers size={9} />Collections & more</i></span></span>
+    </>}>
+    <div className="noon-atlas-body">
+      <div className="noon-atlas-topline"><span>THE APP & THE FEATURES</span><span>SELECT A PART TO EXPLORE <span aria-hidden="true">↙</span></span></div>
+      <div className="noon-atlas-layout">
+        <div className="noon-atlas-nav" role="tablist" aria-label="Explore the catalog pipeline" aria-orientation="vertical">
+          {noonTopics.map((item, index) => <Fragment key={item.label}>
+            {index === 3 && <span className="noon-nav-divider" role="presentation">FEATURES I BUILT</span>}
+            <button type="button" role="tab" id={`noon-topic-${index}`} aria-controls="noon-topic-panel" aria-selected={selected === index} tabIndex={selected === index ? 0 : -1} data-tone={item.tone} onClick={() => selectTopic(index)} onKeyDown={event => {
+              const next = event.key === "ArrowDown" || event.key === "ArrowRight" ? (index + 1) % noonTopics.length : event.key === "ArrowUp" || event.key === "ArrowLeft" ? (index + noonTopics.length - 1) % noonTopics.length : event.key === "Home" ? 0 : event.key === "End" ? noonTopics.length - 1 : null;
+              if (next !== null) { event.preventDefault(); selectTopic(next, true); }
+            }}><span className="noon-nav-marker">{item.kind === "video" ? <Upload size={12} /> : item.kind === "brand" ? <Search size={12} /> : index >= 3 ? <Layers size={12} /> : item.mark}</span><span><strong>{item.label}</strong><small>{item.caption}</small></span><ArrowUpRight size={13} aria-hidden="true" />{selected === index && <motion.i layoutId="noon-topic-active" transition={{ duration: reduced ? 0 : .25 }} />}</button>
+          </Fragment>)}
+        </div>
+        <div className="noon-atlas-panel" id="noon-topic-panel" role="tabpanel" aria-labelledby={`noon-topic-${selected}`} tabIndex={0} data-tone={topic.tone}>
+          <motion.div key={selected} initial={reduced ? false : { opacity: .4, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .28 }}>
+            <div className="noon-panel-meta"><span><i aria-hidden="true" />{topic.kind === "overview" ? "DUBAI MALL APP" : selected < 3 ? "ACROSS THE PIPELINE" : topic.kind === "sizing" ? "BUILT + IN PROGRESS" : "FEATURE IMPLEMENTATION"}</span><span>0{selected + 1} / {String(noonTopics.length).padStart(2,"0")}</span></div>
+            <h4>{topic.title}</h4><p className="noon-panel-intro">{topic.intro}</p>
+            <div className={`noon-exhibit noon-exhibit-${topic.kind}`}>
+              {topic.kind === "overview" && <div className="noon-app-scale"><div><strong>100K</strong><span>products</span></div><div><strong>~2M</strong><span>SKUs</span></div><p>Pre-launch foundations.<br />Production catalog.</p></div>}
+              {topic.kind === "brand" && <div className="noon-brand-diagram"><span><small>EXISTING SEARCH</small><strong>Store core</strong></span><i aria-hidden="true">→</i><span><small>NEW FEATURE</small><strong>Brand search</strong></span><em>Same core · new search path</em></div>}
+              {topic.kind === "sizing" && <div className="noon-size-routing"><span className="size-routing-label">SIZE ORDERING / CONTROLLED AI</span><div><span>Known combination</span><i aria-hidden="true">→</i><strong>Reuse saved order</strong></div><div><span>New combination</span><i aria-hidden="true">→</i><strong>Identify system & order</strong></div><div><span>Ops review & edits</span><i aria-hidden="true">→</i><strong>Re-index related products</strong></div><small><i aria-hidden="true" />Failure reasons and sizing-system statistics in the Ops dashboard</small><small><i aria-hidden="true" />Size normalization: in progress</small></div>}
+              {topic.kind === "seller" && <><div className="noon-file-stack" aria-hidden="true"><i /><i /><i /></div><div className="noon-exhibit-text"><small>SELLER LAB</small><strong>Import ↔ Export</strong><span>Partners manage their catalog here.</span></div><div className="noon-record-preview" aria-label="Products, stores and brands"><span><i />Products</span><span><i />Stores</span><span><i />Brands</span></div></>}
+              {topic.kind === "search" && <><div className="noon-search-preview"><span><Search size={13} /><strong>Product discovery</strong><small>SOLR</small></span><div><i>Suggestions</i><i>Autocomplete</i><i>Filter keys</i></div></div><span className="noon-search-destination">PDP<br />BLP<ArrowUpRight size={13} /></span></>}
+              {topic.kind === "video" && <><div className="noon-video-limit"><strong>20</strong><span>videos / import</span></div><div className="noon-video-conversion"><span>100 MB <small>source limit</small></span><i aria-hidden="true" /><strong>≤20 MB <small>processed video</small></strong></div></>}
+              {topic.kind === "collections" && <><div className="noon-sku-mosaic" aria-label="Selected SKUs"><i /><i /><i /><i /><i /><i /></div><span className="noon-mosaic-arrow" aria-hidden="true"><small>CURATE</small>→</span><div className="noon-mini-store"><small>CMS / STOREFRONT</small><strong>Summer collection</strong><span><i /><i /><i /></span></div></>}
+            </div>
+            <div className="noon-panel-notes">{topic.sections.map(([title, body]) => <section key={title}><h5>{title}</h5><p>{body}</p></section>)}</div>
+          </motion.div>
+          <div className="noon-panel-pager"><span className="noon-topic-position" aria-label={`Part ${selected + 1} of ${noonTopics.length}`}>{noonTopics.map((item,index) => <i key={item.label} className={index === selected ? "is-current" : ""} />)}</span><button type="button" onClick={() => selectTopic((selected + 1) % noonTopics.length, true)}><span><small>UP NEXT</small>{noonTopics[(selected + 1) % noonTopics.length].label}</span><ArrowUpRight size={15} aria-hidden="true" /></button></div>
+        </div>
+      </div>
+    </div>
+  </SmoothDisclosure>;
+}
+
+const experienceNoteHeadings: Record<string, { title: string; subtitle: string }> = {
+  "German University in Cairo": { title: "Inside the classroom", subtitle: "Teaching, scholarship & the move to industry" },
+  Microsoft: { title: "Behind Clarity’s benchmarks", subtitle: "Automation, observability & performance" },
+  micro1: { title: "Designing and reviewing hard problems", subtitle: "AI training, problem design & review" },
+  Mercor: { title: "The making of a challenge", subtitle: "Problem design, test data & review" },
+  "Benha National University": { title: "Building the foundations", subtitle: "Core teaching, coursework & ICPC" },
+  "Coach Academy": { title: "Training the problem solver", subtitle: "Competition, interviews & mentorship" },
+};
+
+function ExperienceNotes({ entry }: { entry: ExperienceEntry }) {
+  const heading = experienceNoteHeadings[entry.company];
+  return <SmoothDisclosure className="experience-notes" summaryClassName="experience-notes-trigger" summary={<><span className="experience-notes-title"><span className="experience-notes-kicker">A CLOSER LOOK</span><strong>{heading.title}</strong><span className="experience-notes-subtitle">{heading.subtitle}</span></span><span className="experience-notes-action"><small className="disclosure-open-label">EXPLORE</small><small className="disclosure-close-label">CLOSE</small><span className="experience-notes-plus" aria-hidden="true"><Plus size={12} strokeWidth={1.5} /></span></span></>}>
+    <div className="experience-notes-body">
+      <dl className="experience-reading-list">{entry.bullets.map(bullet => {
+        const match = bullet.match(/^\*\*(.+?)\.\*\*\s*(.*)$/);
+        return <div key={bullet}><dt>{match ? match[1] : "Contribution"}</dt><dd><FormattedText text={match ? match[2] : bullet} /></dd></div>;
+      })}</dl>
+      {entry.phases && <div className="experience-notes-phases" aria-label="Role progression">{entry.phases.map(phase => <div key={phase.period}><strong>{phase.type}</strong><span>{phase.period}</span></div>)}</div>}
+    </div>
+  </SmoothDisclosure>;
+}
+
+function MicrosoftWork({ entry }: { entry: ExperienceEntry }) {
+  const [selected,setSelected] = useState(0);
+  const reduced = useReducedMotion();
+  const topics = [
+    { label: "Automation", title: "Benchmarks that run themselves.", bullets:[0,1] },
+    { label: "Observability", title: "A clearer view of performance.", bullets:[2] },
+    { label: "Test capacity", title: "More parallel tests. Same test window.", bullets:[3] },
+  ];
+  const topic = topics[selected];
+  const id = useId();
+  return <SmoothDisclosure className="microsoft-brief" summaryClassName="microsoft-brief-cover" summary={<><span className="microsoft-cover-symbol" aria-hidden="true"><i /><i /><i /><i /></span><span><small>MICROSOFT CLARITY / BACKEND</small><strong>Inside the testing engine.</strong><span>Automation, visibility, and room to scale.</span></span><span className="microsoft-cover-action"><span className="disclosure-open-label">EXPLORE</span><span className="disclosure-close-label">CLOSE</span><DetailToggle /></span></>}>
+    <div className="microsoft-brief-body">
+      <div className="microsoft-brief-tabs" role="tablist" aria-label="Explore my work on Microsoft Clarity">{topics.map((item,index) => <button key={item.label} id={`${id}-tab-${index}`} type="button" role="tab" aria-selected={index === selected} tabIndex={index === selected ? 0 : -1} aria-controls={`${id}-panel`} onClick={() => setSelected(index)} onKeyDown={event => { const next = event.key === "ArrowRight" ? (index+1)%3 : event.key === "ArrowLeft" ? (index+2)%3 : event.key === "Home" ? 0 : event.key === "End" ? 2 : null; if (next !== null) {event.preventDefault();setSelected(next);document.getElementById(`${id}-tab-${next}`)?.focus();} }}><span>0{index+1}</span>{item.label}{index === selected && <motion.i layoutId={`${id}-active`} transition={{duration:reduced ? 0 : .2}} />}</button>)}</div>
+      <div id={`${id}-panel`} role="tabpanel" aria-labelledby={`${id}-tab-${selected}`} tabIndex={0}>
+        <motion.div key={selected} initial={reduced ? false : {opacity:.5,y:4}} animate={{opacity:1,y:0}} transition={{duration:.18}}>
+          <h4>{topic.title}</h4>
+          {selected === 0 && <div className="clarity-automation" aria-label="Timer and queue triggers run Azure Functions for session and metric validation"><span><small>TRIGGER</small><strong>Timer / Queue</strong></span><i aria-hidden="true">→</i><span><small>EXECUTE</small><strong>Azure Functions</strong></span><i aria-hidden="true">→</i><span><small>VALIDATE</small><strong>Sessions & metrics</strong></span></div>}
+          {selected === 1 && <div className="clarity-observability"><div><strong>15+</strong><span>system metrics</span></div><div className="clarity-query"><small>QUERY → VISUALIZE</small><span>KQL <i>→</i> Grafana</span><small>Monitor performance trends</small></div></div>}
+          {selected === 2 && <div className="clarity-capacity"><div><span>BEFORE</span><strong>100</strong><i style={{"--capacity":"10%"} as CSSProperties} /></div><div><span>AFTER</span><strong>1,000</strong><i style={{"--capacity":"100%"} as CSSProperties} /></div><p>tests per 12-hour window</p></div>}
+          <div className="clarity-description">{topic.bullets.map(index => <p key={index}><FormattedText text={entry.bullets[index].replace(/^\*\*.+?\.\*\*\s*/,"")} /></p>)}</div>
+        </motion.div>
+      </div>
+    </div>
+  </SmoothDisclosure>;
+}
 
 function CareerJourney({ jobs }: { jobs: ExperienceEntry[] }) {
   const journey = useRef<HTMLDivElement>(null);
@@ -290,7 +568,7 @@ function CareerJourney({ jobs }: { jobs: ExperienceEntry[] }) {
     };
   }, [jobs.length]);
 
-  return <div className="career-journey" ref={journey}>
+  return <div className="career-journey" ref={journey} data-range={`{ 01 → ${String(jobs.length).padStart(2,"0")} }`}>
     <aside className="career-story">
       <span className="career-live"><i /> CAREER SIGNAL / LIVE</span>
       <h3><span>Build at scale.</span><span>Teach with clarity.</span><em>Stay sharp.</em></h3>
@@ -306,7 +584,7 @@ function CareerJourney({ jobs }: { jobs: ExperienceEntry[] }) {
             exit={reduced ? undefined : { opacity: 0, y: -3 }}
             transition={{ duration: reduced ? 0 : 0.26, ease: EASE }}
           >
-            <span className="career-now-index">0{activeStop + 1} / 06</span>
+            <span className="career-now-index">0{activeStop + 1} / {String(jobs.length).padStart(2,"0")}</span>
             <div className="career-now-company"><OrganizationMark name={activeJob.company} src={activeJob.logo} /><span><strong>{activeJob.company}</strong><small>{activeJob.role}</small></span></div>
             <h4>{activeStory.chapter}</h4>
             <p>{activeStory.chapterText}</p>
@@ -338,7 +616,7 @@ function CareerJourney({ jobs }: { jobs: ExperienceEntry[] }) {
           <span className="career-node" aria-hidden="true"><i /></span>
           <div className="career-stop-topline">
             <span>0{index + 1} / {current ? "NOW" : entry.period.split("–").at(-1)?.trim()}</span>
-            <span className={current ? "is-current" : ""}>{current ? "ACTIVE ROLE" : entry.type.toUpperCase()}</span>
+            <span className={current ? "is-current" : ""}>{[entry.type,entry.schedule].filter(Boolean).join(" · ").toUpperCase()}</span>
           </div>
           <div className="career-stop-heading">
             <a className="career-company-identity" href={companyLinkedIn[entry.company]} target="_blank" rel="noopener noreferrer" aria-label={`${entry.company} on LinkedIn (opens in a new tab)`}>
@@ -358,15 +636,9 @@ function CareerJourney({ jobs }: { jobs: ExperienceEntry[] }) {
           </div>
           <div className="career-stop-footer">
             <Tags items={story.tags} />
-            <span>{entry.workMode} · {entry.location}</span>
+            <span className="career-workplace"><span>{entry.workMode}</span>{entry.workMode !== "Remote" && entry.location && <span>{entry.location}</span>}</span>
           </div>
-          <details className="career-log" name="career-notes">
-            <summary>
-              <span className="career-log-title"><small>FIELD NOTES · 0{entry.bullets.length}</small><strong>{story.drawerTitle}</strong></span>
-              <span className="career-log-action"><small className="open-label">EXPAND</small><small className="close-label">CLOSE</small><DetailToggle /></span>
-            </summary>
-            <div className="career-log-body"><ol>{entry.bullets.map(bullet => <li key={bullet}><FormattedText text={bullet} /></li>)}</ol></div>
-          </details>
+          {entry.company === "noon" ? <NoonWorkflows /> : entry.company === "Microsoft" ? <MicrosoftWork entry={entry} /> : <ExperienceNotes entry={entry} />}
         </motion.article>;
       })}
     </div>
@@ -696,7 +968,7 @@ export function PortfolioSite() {
     }
   }
 
-  const career = [experience[0], experience[1], experience[2], experience[3], experience[5], experience[4]];
+  const career = [...experience].sort((a,b) => Date.parse(b.period.split(" – ")[0]) - Date.parse(a.period.split(" – ")[0]));
   const contactMailto = `mailto:${personal.email}?subject=${encodeURIComponent("A problem worth solving")}`;
   const toolsFor = (ids: string[]) => techStack.filter(group => ids.includes(group.id)).flatMap(group => group.items);
   const stackLanes = [

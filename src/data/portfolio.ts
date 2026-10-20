@@ -36,7 +36,7 @@ export const identityPillars = [
     title: "Teaching",
     accent: "amber" as const,
     lines: [
-      "**Teaching assistant** at German University in Cairo.",
+      "Former **teaching assistant** at German University in Cairo.",
       "Ex-**teaching assistant** at Benha National University.",
       "Ex-**problem-solving instructor** at Coach Academy.",
       "**1,000+ students** taught across my journey.",
@@ -87,7 +87,7 @@ export const educationEntries: EducationEntry[] = [
     logoClassName: "bg-white border-border/80",
     highlights: [
       "Awarded a **fully funded Master's scholarship** at GUC (**2025–2026**) after completing engineering at Benha University.",
-      "Started the Master's journey before choosing to transition fully toward **software engineering** and industry-focused career growth.",
+      "Later cancelled the scholarship to prioritize **hands-on software engineering** and a return to industry.",
       "Focused on building **real-world engineering experience** and scalable software systems instead of continuing the academic path.",
     ],
     tags: ["Fully Funded", "GUC", "Master's", "Cancelled"],
@@ -224,6 +224,8 @@ export type ExperienceEntry = {
   logoClassName?: string;
   workMode: WorkMode;
   type: string;
+  /** Optional schedule when the engagement type is Contract. */
+  schedule?: "Full-time" | "Part-time";
   period: string;
   /** e.g. "New Cairo, Egypt" or "Remote" */
   location: string;
@@ -249,13 +251,17 @@ export const experience: ExperienceEntry[] = [
     period: "Mar 2026 – Present",
     location: "New Cairo, Egypt",
     bullets: [
-      "Software Engineer at **noon**, contributing to large-scale e-commerce — **Dubai Mall** shopping experiences and catalog-related services.",
-      "Part of the **March '26 backend cohort** at noon.",
-      "Work across **Catalog**, **Search**, **Indexing**, and **Commercial** systems.",
-      "Enhance search performance and optimize indexing pipelines.",
-      "Contribute to **Seller Lab** and internal tooling — implemented the **Video Upload** feature.",
-      "Resolve bugs in Search and Indexing; improve catalog synchronization and indexing reliability.",
-      "Set up staging environments for **Seller Lab** and customer-facing catalog applications.",
+      "**Dubai Mall app — before launch to production.** Joined before the internal launch and worked with my mentor as a two-person catalog team, handling much of the catalog work as the app took shape.",
+      "**Catalog scale and search.** Work across a catalog of around **100,000 products** and approximately **2 million SKUs**, continually improving search and its latency, along with Solr suggestions, autocomplete, and filter keys.",
+      "**Brand search — built from scratch.** Added brand search to the existing store and product search experience, reusing the existing **Solr store core** rather than creating a new core.",
+      "**Collections — built end to end.** Built collection creation, SKU selection, and CMS integration so partners can display curated assortments in their app storefronts.",
+      "**Video uploads.** Built PDB and bulk importer upload workflows supporting up to **20 videos per import**, with source files up to **100 MB** and automatic compression to **20 MB or less** per video.",
+      "**Size ordering.** Built a controlled **AI-assisted workflow** to identify sizing systems and order size combinations without a shared size guide, returning failure reasons when ordering cannot be completed reliably.",
+      "**Ops review dashboard.** Built a dashboard for combinations, orderings, sizing-system statistics, AI suggestions, failure review, and manual edits. Changes trigger re-indexing of related products so the updated order reaches the app.",
+      "**Incremental processing and cost.** Reused saved orderings and added processing for only new products with missing size combinations, avoiding a full catalog rerun when the feature is re-enabled.",
+      "**Size normalization.** Currently working on this as a separate feature from size ordering.",
+      "**The catalog pipeline.** Worked across Seller Lab imports and exports, stores and brands, shared marketplace product data, quality/content/live checks, catalog publication, and Solr re-indexing.",
+      "**Customer-facing services.** Work on catalog services behind **PDP and BLP**, including catalog URIs. My vector search contribution and Elasticsearch exposure were limited.",
     ],
     tags: [
       "FastAPI",
@@ -291,11 +297,11 @@ export const experience: ExperienceEntry[] = [
     logoClassName: "bg-white border-border/80",
     workMode: "On-site",
     type: "Full-time → Part-time",
-    period: "Sep 2025 – Present",
+    period: "Sep 2025 – Jul 2026",
     location: "New Cairo, Egypt",
     phases: [
       {
-        role: "Teaching & Research Assistant",
+        role: "Teaching Assistant",
         type: "Full-time",
         period: "Sep 2025 – Feb 2026",
         workMode: "On-site",
@@ -304,19 +310,19 @@ export const experience: ExperienceEntry[] = [
       {
         role: "Teaching Assistant",
         type: "Part-time",
-        period: "Mar 2026 – Present",
+        period: "Mar 2026 – 10 Jul 2026",
         workMode: "On-site",
-        note: "Converted to part-time",
+        note: "Part-time appointment ended 10 July 2026",
       },
     ],
     bullets: [
-      "Currently teach **Advanced Database** to **100+** undergraduate students through lectures, tutorials, and coursework.",
-      "Previously taught **Data Structures** to **100+** undergraduates.",
-      "Help faculty prepare course projects and support delivery for database coursework.",
-      "Automate assignment corrections by implementing extensive **automated test** suites for consistent grading.",
-      "Support faculty research — literature reviews, experiments, and academic documentation.",
+      "**Teaching.** Taught Advanced Database and, previously, Data Structures to **100+ undergraduates per course**, delivering lectures and tutorials and supporting coursework.",
+      "**Assessment automation.** Built extensive automated test suites for assignment correction, making grading more consistent across submissions.",
+      "**Course development.** Helped faculty prepare database course projects and supported their delivery.",
+      "**Teaching and scholarship.** Started at GUC as a Teaching Assistant and received a **fully funded Master’s scholarship**.",
+      "**Choosing industry.** Later cancelled the scholarship to focus on hands-on software engineering and return to industry. Continued teaching part-time until **10 July 2026**.",
     ],
-    tags: ["Advanced Database", "Data Structures", "Teaching", "Automated Testing", "Research"],
+    tags: ["Advanced Database", "Data Structures", "Teaching", "Automated Testing"],
     photos: [
       {
         src: "/photos/experience/guc-1.png",
@@ -325,6 +331,22 @@ export const experience: ExperienceEntry[] = [
         focus: "50% 16%",
       },
     ],
+  },
+  {
+    role: "AI Trainer & Reviewer",
+    company: "micro1",
+    logo: "/logos/micro1-mark.png",
+    workMode: "Remote",
+    type: "Contract",
+    schedule: "Part-time",
+    period: "Sep 2025 – Nov 2025",
+    location: "",
+    bullets: [
+      "**Problem design.** Created around **150 very hard algorithmic problems** for AI training, with a focus on challenging problem-solving tasks.",
+      "**Solutions and validation.** Wrote solutions and test data for challenging problems, following the same problem-setting workflow as my work at Mercor.",
+      "**Review.** Reviewed problem submissions alongside my own AI-training and problem-authoring work.",
+    ],
+    tags: ["AI Training", "Algorithms", "Problem Design", "Review"],
   },
   {
     role: "Software Engineer",
@@ -344,10 +366,10 @@ export const experience: ExperienceEntry[] = [
       },
     ],
     bullets: [
-      "Enhanced **Azure Functions** for **Microsoft Clarity**, simulating sessions and validating metrics for **20,000+** test runs.",
-      "Automated the benchmarking pipeline using timer- and queue-triggered **Azure Functions**, reducing manual work by **100%**.",
-      "Built **KQL** dashboards in **Grafana** to monitor **15+** system metrics and visualize performance trends.",
-      "Fixed high-impact backend issues enabling a **10×** increase in parallel testing capacity (**100 → 1000** tests per 12-hour window).",
+      "**Benchmark automation.** Automated Microsoft Clarity’s benchmarking pipeline with timer- and queue-triggered **Azure Functions**, replacing manual execution.",
+      "**Session validation.** Enhanced Azure Functions used to simulate sessions and validate metrics across **20,000+ test runs**.",
+      "**Observability.** Built **Grafana** dashboards with **KQL** queries to track **15+ system metrics** and inspect performance trends.",
+      "**Parallel test capacity.** Fixed backend issues that increased capacity from **100 to 1,000 tests per 12-hour window** — a **10× increase**.",
     ],
     tags: [
       "Python",
@@ -372,11 +394,11 @@ export const experience: ExperienceEntry[] = [
     workMode: "Remote",
     type: "Part-time",
     period: "Nov 2024 – Feb 2025",
-    location: "San Francisco, California · United States",
+    location: "",
     bullets: [
-      "Created **75+** competitive programming problems with **20+** test cases each to improve **AI** problem-solving capabilities.",
-      "Authored detailed solutions and edge-case test data for **graph, DP, and greedy** problem families.",
-      "Reviewed problem quality and difficulty calibration with the engineering team before release.",
+      "**Problem design.** Authored **75+ competitive programming problems** to challenge AI problem solving, each backed by **20+ test cases**.",
+      "**Solutions and validation.** Wrote detailed solutions and edge-case test data for graph, dynamic programming, and greedy problems.",
+      "**Quality review.** Worked with the engineering team to review problem quality and calibrate difficulty before release.",
     ],
     tags: ["C", "C++", "Competitive Programming", "Problem Setting"],
   },
@@ -388,11 +410,11 @@ export const experience: ExperienceEntry[] = [
     workMode: "Remote",
     type: "Part-time",
     period: "Jul 2023 – Aug 2024",
-    location: "Remote · Egypt",
+    location: "Egypt",
     bullets: [
-      "Trained **500+** undergraduates for **ICPC** competitions and **100+** graduates for problem-solving interviews.",
-      "Delivered structured sessions on **graphs, dynamic programming, and greedy** techniques with weekly contests.",
-      "Mentored students through mock interviews and contest debriefs to close skill gaps quickly.",
+      "**Training.** Prepared **500+ undergraduates** for ICPC competitions and **100+ graduates** for problem-solving interviews.",
+      "**Structured practice.** Delivered sessions on graphs, dynamic programming, and greedy techniques, alongside weekly contests.",
+      "**Feedback and mentorship.** Ran mock interviews and contest debriefs to identify gaps and guide students’ next steps.",
     ],
     tags: ["C", "C++", "ICPC", "Training", "Interviews"],
   },
@@ -406,9 +428,9 @@ export const experience: ExperienceEntry[] = [
     period: "Sep 2024 – Feb 2025",
     location: "Cairo, Egypt",
     bullets: [
-      "Taught **200+** undergraduate students in **OOP, Algorithms, and MySQL**; supported the university **ICPC** training program.",
-      "Ran tutorials and office hours, graded assignments, and prepared exam questions with rubrics.",
-      "Coached contest teams on problem-solving patterns ahead of regional **ICPC** qualifiers.",
+      "**Core teaching.** Taught **200+ undergraduates** in object-oriented programming, algorithms, and MySQL, and supported the university’s ICPC training program.",
+      "**Assessment and support.** Led tutorials and office hours, graded assignments, and prepared exam questions with grading rubrics.",
+      "**Contest coaching.** Coached teams on problem-solving patterns ahead of regional ICPC qualifiers.",
     ],
     tags: ["C", "C++", "OOP", "Algorithms", "MySQL", "ICPC"],
   },
@@ -791,7 +813,7 @@ export const contactMeta = {
   responseTime: "Usually replies within 24–48 hours",
   languages: "English & Arabic",
   preferred: "Email",
-  currentRole: "Software Engineer @ noon · Teaching Assistant @ GUC",
+  currentRole: "Software Engineer @ noon",
 };
 
 export const heroSocials = [

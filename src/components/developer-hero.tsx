@@ -81,7 +81,7 @@ export function DeveloperHero({ socials, contactHref }: { socials: ReactNode; co
       <div className={styles.introduction}>
         <p className={styles.eyebrow}><Code2 size={14} />HELLO, I’M MAHMOUD.</p>
         <h1 id="hero-title">I build software.<br /><span>I teach the thinking.</span></h1>
-        <p className={styles.bio}>Software engineer at <strong>noon</strong>, previously at <strong>Microsoft</strong>. I build production systems, teach algorithms, data structures and databases at <strong>GUC</strong>, and compete in problem solving.</p>
+        <p className={styles.bio}>Software engineer at <strong>noon</strong>, previously at <strong>Microsoft</strong>. I build production systems, have taught algorithms, data structures and databases, including at <strong>GUC</strong>, and compete in problem solving.</p>
         <div className={styles.signalRow} aria-label="Career highlights">
           <span><b>3×</b> ICPC regional finalist</span><i />
           <span><b>1,000+</b> students</span><i />
@@ -113,7 +113,7 @@ export function DeveloperHero({ socials, contactHref }: { socials: ReactNode; co
         </figure>
         <div className={`${styles.logoOrbiter} ${styles.noonOrbiter}`}><div><Image src="/logos/noon.svg" alt="" width={30} height={30} /><span><small>CURRENTLY</small><strong>noon</strong></span></div></div>
         <div className={`${styles.logoOrbiter} ${styles.microsoftOrbiter}`}><div><Image src="/logos/microsoft.svg" alt="" width={25} height={25} /><span><small>PREVIOUSLY</small><strong>Microsoft</strong></span></div></div>
-        <div className={`${styles.logoOrbiter} ${styles.gucOrbiter}`}><div><Image src="/logos/guc.png" alt="" width={28} height={28} /><span><small>TEACHING</small><strong>GUC</strong></span></div></div>
+        <div className={`${styles.logoOrbiter} ${styles.gucOrbiter}`}><div><Image src="/logos/guc.png" alt="" width={28} height={28} /><span><small>TAUGHT AT</small><strong>GUC</strong></span></div></div>
       </div>
     </div>
     <div className={styles.bottom}>
