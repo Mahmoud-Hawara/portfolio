@@ -293,7 +293,7 @@
   .github-mini-stat { min-width: 0; padding: 0; border-left: 0; }
   .github-activity-stats span { font-size: 11px; line-height: 1.6; }
   .github-kicker { font-size: 10px; }
-  .github-calendar-scroll { max-width: 100%; overflow-x: auto; overscroll-behavior-x: contain; }
+  .github-calendar-scroll { width: 100%; min-width: 0; max-width: 100%; overflow-x: auto; overscroll-behavior-x: none; }
   .github-calendar-inner { min-width: 600px; }
   .github-months span { font-size: 10px; }
   .github-weeks, .github-week { gap: 3px; }

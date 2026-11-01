@@ -866,7 +866,8 @@ html::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, var(--
   outline: none;
 }
 .github-calendar-scroll:focus-visible { box-shadow: 0 0 0 1px var(--accent); }
-.github-calendar-inner { width: 100%; min-width: 0; }
+/* Keep the moving sweep and cell effects inside the finite calendar width. */
+.github-calendar-inner { width: 100%; min-width: 0; overflow: clip; }
 .github-months { position: relative; width: min(791px, calc(100% - 35px)); height: 21px; margin-left: auto; }
 .github-months span {
   position: absolute;
@@ -876,6 +877,7 @@ html::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, var(--
   letter-spacing: .06em;
   text-transform: uppercase;
 }
+.github-months span:last-child { translate: -100% 0; }
 .github-calendar-grid { position: relative; display: flex; justify-content: flex-end; align-items: stretch; gap: 11px; width: 100%; min-width: 0; }
 .github-calendar-grid::after {
   content: "";
