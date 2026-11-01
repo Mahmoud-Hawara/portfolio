@@ -8,6 +8,7 @@ import "./portfolio-scenes.css";
 import "./portfolio-engineering.css";
 import "./portfolio-palette.css";
 import "./catalog-workflows.css";
+import "./portfolio-mobile.css";
 
 const inter = Inter({ variable: "--font-sans", subsets: ["latin"], display: "swap" });
 const mono = IBM_Plex_Mono({ variable: "--font-mono", subsets: ["latin"], weight: ["400", "500"], display: "swap" });

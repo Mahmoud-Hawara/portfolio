@@ -198,7 +198,7 @@ function GitHubActivity({ username, profile }: { username: string; profile: stri
       <div><span className="github-kicker"><span className="machine-live-dot" />GITHUB / LAST 12 MONTHS</span><h3><span className="github-handle-icon"><SocialIcon brand="github" /></span>@{username}</h3></div>
       <div className="github-activity-stats"><div className="github-total"><strong>{total ?? "—"}</strong><span>{activityUnavailable ? "View live activity on GitHub" : "contributions"}</span></div><div className="github-mini-stat"><strong>{activeDays ?? "—"}</strong><span>active days</span></div><div className="github-mini-stat"><strong>{longestStreak ?? "—"}</strong><span>days / longest streak</span></div></div>
     </div>
-    <div className="github-calendar-scroll" aria-label={activityUnavailable ? "GitHub activity unavailable" : `${total ?? "Loading"} GitHub contributions in the last year`}>
+    <div className="github-calendar-scroll" role="region" tabIndex={0} aria-label={activityUnavailable ? "GitHub activity unavailable" : `${total ?? "Loading"} GitHub contributions in the last year. Scroll horizontally to explore.`}>
       <div className="github-calendar-inner">
         <div className="github-months" aria-hidden="true">{months.map(month => <span key={`${month.label}-${month.weekIndex}`} style={{ "--github-offset": `${(month.weekIndex / Math.max(weeks.length - 1, 1)) * 100}%` } as CSSProperties}>{month.label}</span>)}</div>
         <div className="github-calendar-grid"><div className="github-day-labels" aria-hidden="true"><span>MON</span><span>WED</span><span>FRI</span></div><div className={`github-weeks ${activity ? "is-loaded" : "is-loading"}`}>{weeks.map((week, weekIndex) => <div className="github-week" key={weekIndex}>{week.map((day, dayIndex) => <time className={weekIndex === weeks.length - 1 && dayIndex === week.length - 1 ? "is-latest" : ""} key={`${weekIndex}-${dayIndex}`} dateTime={day.date || undefined} title={day.date ? `${day.count} contribution${day.count === 1 ? "" : "s"} on ${day.date}` : "Loading activity"} data-level={day.level} />)}</div>)}</div></div>
@@ -898,15 +898,24 @@ export function PortfolioSite() {
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
 
   useEffect(() => {
+    const compactLayout = window.matchMedia("(max-width: 1000px)");
     const updateHeader = () => {
-      const visible = window.scrollY > 48;
+      const visible = compactLayout.matches || window.scrollY > 48;
       setHeaderVisible(visible);
       setHeaderCompact(window.scrollY > window.innerHeight * 0.9);
       if (!visible) setMenuOpen(false);
     };
+    const updateLayout = () => {
+      setMenuOpen(false);
+      updateHeader();
+    };
     updateHeader();
     window.addEventListener("scroll", updateHeader, { passive: true });
-    return () => window.removeEventListener("scroll", updateHeader);
+    compactLayout.addEventListener("change", updateLayout);
+    return () => {
+      window.removeEventListener("scroll", updateHeader);
+      compactLayout.removeEventListener("change", updateLayout);
+    };
   }, []);
 
   useEffect(() => {
@@ -937,9 +946,34 @@ export function PortfolioSite() {
 
   useEffect(() => {
     if (!menuOpen) return;
-    const handleKey = (event: KeyboardEvent) => { if (event.key === "Escape") { setMenuOpen(false); menuButton.current?.focus(); } };
+    const previousOverflow = document.body.style.overflow;
+    const previousRootOverflow = document.documentElement.style.overflow;
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+    const handleKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMenuOpen(false);
+        menuButton.current?.focus();
+      }
+      if (event.key === "Tab") {
+        const controls = Array.from(document.querySelectorAll<HTMLElement>(".site-header a[href], .site-header button"));
+        const first = controls[0];
+        const last = controls.at(-1);
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last?.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first?.focus();
+        }
+      }
+    };
     document.addEventListener("keydown", handleKey);
-    return () => document.removeEventListener("keydown", handleKey);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.documentElement.style.overflow = previousRootOverflow;
+      document.removeEventListener("keydown", handleKey);
+    };
   }, [menuOpen]);
 
   async function copyEmail() {
@@ -1010,7 +1044,7 @@ export function PortfolioSite() {
         </div>
       </header>
 
-      <main id="main-content">
+      <main id="main-content" inert={menuOpen}>
         <DeveloperHero contactHref={contactMailto} socials={<><ExternalLink href={personal.links.github}>GitHub</ExternalLink><ExternalLink href={personal.links.linkedin}>LinkedIn</ExternalLink><ExternalLink href={personal.links.codeforces}>Codeforces</ExternalLink></>} />
 
         <div className="proof-band"><Reveal className="shell proof-grid"><div><Trophy className="proof-icon" size={21} /><strong>3×</strong><span>ICPC regional finalist</span></div><div><Sparkles className="proof-icon" size={21} /><strong>2×</strong><span>ECPC bronze medalist</span></div><div><Users className="proof-icon" size={21} /><strong>1,000+</strong><span>Students taught</span></div><div><Braces className="proof-icon" size={21} /><strong>4,000+</strong><span>Problems solved</span></div></Reveal></div>
@@ -1204,7 +1238,7 @@ export function PortfolioSite() {
           </div>
         </section>
       </main>
-      <footer className="site-footer footer-closing shell">
+      <footer className="site-footer footer-closing shell" inert={menuOpen}>
         <div className="footer-closing-main">
           <p className="footer-signoff"><i /><span>© {new Date().getFullYear()}</span><strong>Mahmoud Hawara</strong></p>
           <nav className="footer-socials" aria-label="Social profiles">

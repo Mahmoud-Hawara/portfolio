@@ -3,7 +3,8 @@
 import { type ReactNode, useEffect, useState } from "react";
 import Image from "next/image";
 import { useReducedMotion } from "framer-motion";
-import { ArrowDown, ArrowUpRight, Box, Braces, Code2, Database, GitBranch, MapPin } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Box, Braces, Code2, Database, Download, GitBranch, MapPin } from "lucide-react";
+import { personal } from "@/data/portfolio";
 import styles from "./developer-hero.module.css";
 
 export function OpeningSequence() {
@@ -14,7 +15,7 @@ export function OpeningSequence() {
   useEffect(() => {
     let seen = false;
     try { seen = sessionStorage.getItem("mahmoud-opening-v6") === "seen"; } catch {}
-    if (reduced || seen || window.scrollY > 48 || (location.hash && location.hash !== "#hero")) {
+    if (reduced || window.matchMedia("(max-width: 760px)").matches || seen || window.scrollY > 48 || (location.hash && location.hash !== "#hero")) {
       const hideFrame = window.requestAnimationFrame(() => setVisible(false));
       return () => window.cancelAnimationFrame(hideFrame);
     }
@@ -88,7 +89,7 @@ export function DeveloperHero({ socials, contactHref }: { socials: ReactNode; co
           <span><b>4,000+</b> problems</span>
         </div>
         <div className={styles.actions}>
-          <a className={styles.primaryAction} href="#projects">Explore my work <ArrowUpRight size={18} /></a>
+          <a className={styles.primaryAction} href={personal.cv} download="Mahmoud-Hawara-CV.pdf">Download CV <Download size={18} aria-hidden="true" /></a>
           <a className={styles.secondaryAction} href="#experience">My experience <ArrowDown size={13} /></a>
         </div>
         <div className={styles.modeCard} aria-label="How Mahmoud works">
@@ -108,7 +109,7 @@ export function DeveloperHero({ socials, contactHref }: { socials: ReactNode; co
         <span className={`${styles.codeTag} ${styles.tagTop}`} aria-hidden="true"><Braces size={13} /> software</span>
         <div className={styles.processTag} aria-hidden="true"><small>WORKFLOW</small><span>design <i>→</i> build <i>→</i> ship</span></div>
         <figure className={styles.portrait}>
-          <div className={styles.portraitImage}><Image src="/avatar.png" alt="Mahmoud Hawara" width={683} height={1024} sizes="(max-width: 760px) 180px, 310px" preload /></div>
+          <div className={styles.portraitImage}><Image src="/avatar.png" alt="Mahmoud Hawara" width={683} height={1024} sizes="(max-width: 760px) 205px, 310px" preload /></div>
           <figcaption><span>MAHMOUD HAWARA</span><i />AVAILABLE IN CAIRO</figcaption>
         </figure>
         <div className={`${styles.logoOrbiter} ${styles.noonOrbiter}`}><div><Image src="/logos/noon.svg" alt="" width={30} height={30} /><span><small>CURRENTLY</small><strong>noon</strong></span></div></div>
